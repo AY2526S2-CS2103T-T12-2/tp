@@ -35,3 +35,13 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 * Role: Developer
 * Responsibilities: UI
+
+### coder114514
+
+<img src="images/coder114514.png" width="200px">
+
+[[homepage]](https://coder114514.github.io/)
+[[github](http://github.com/coder114514)]
+
+* Role: Developer
+* Responsibilities: ?
