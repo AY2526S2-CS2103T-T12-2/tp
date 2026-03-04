@@ -16,7 +16,7 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 * Role: Developer
 * Responsibilities: Implementation, testing
 
-[[github](https://github.com/yongqinglim)]
+[[github](https://github.com/lyq1375560)]
 
 ### Tran Gia Huy
 
