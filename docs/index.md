@@ -4,7 +4,7 @@ title: AddressBook Level-3
 ---
 
 [![CI Status](https://github.com/AY2526S2-CS2103T-T12-2/tp/actions/workflows/gradle.yml/badge.svg)](https://github.com/AY2526S2-CS2103T-T12-2/tp/actions/workflows/gradle.yml)
-[![codecov](https://codecov.io/gh/se-edu/addressbook-level3/branch/master/graph/badge.svg)](https://codecov.io/gh/se-edu/addressbook-level3)
+[![codecov](https://codecov.io/github/AY2526S2-CS2103T-T12-2/tp/graph/badge.svg?token=EDRNIPFPXO)](https://codecov.io/github/AY2526S2-CS2103T-T12-2/tp)
 
 ![Ui](images/Ui.png)
 
