@@ -2,14 +2,21 @@
 
 ![Ui](docs/images/Ui.png)
 
-* This is **a sample project for Software Engineering (SE) students**.<br>
-  Example usages:
-  * as a starting point of a course project (as opposed to writing everything from scratch)
-  * as a case study
-* The project simulates an ongoing software project for a desktop application (called _AddressBook_) used for managing contact details.
-  * It is **written in OOP fashion**. It provides a **reasonably well-written** code base **bigger** (around 6 KLoC) than what students usually write in beginner-level SE modules, without being overwhelmingly big.
-  * It comes with a **reasonable level of user and developer documentation**.
-* It is named `AddressBook Level 3` (`AB3` for short) because it was initially created as a part of a series of `AddressBook` projects (`Level 1`, `Level 2`, `Level 3` ...).
-* For the detailed documentation of this project, see the **[Address Book Product Website](https://se-education.org/addressbook-level3)**.
-* This project is a **part of the se-education.org** initiative. If you would like to contribute code to this project, see [se-education.org](https://se-education.org/#contributing-to-se-edu) for more info.
-* Product Name: ClientEase
+### Product name: ClientEase
+
+### Project website: https://ay2526s2-cs2103t-t12-2.github.io/tp/
+
+### Short description
+ClientEase helps home-based business owners manage repeat customers and active orders efficiently using fast command-line input, while providing simple visual feedback through a GUI.
+
+### Target users
+Tech-savvy home-based online business owners who manage a small to medium customer base, perform frequent updates to customer contact information, and prefer keyboard-driven workflows for efficiency.
+
+### Key features
+- Manage repeat customers and maintain organized contact information
+- Track active orders with priority based on due dates
+- Tag priority customers and mark inactive customers to reduce visual clutter
+- Estimate delivery distance and calculate delivery costs based on customer location
+
+### Acknowledgement
+TODO: Add acknowledgement
