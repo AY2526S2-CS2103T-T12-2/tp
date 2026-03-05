@@ -19,4 +19,7 @@ Tech-savvy home-based online business owners who manage a small to medium custom
 - Estimate delivery distance and calculate delivery costs based on customer location
 
 ### Acknowledgement
-TODO: Add acknowledgement
+* This project is based on the AddressBook-Level3 project created by the
+  [SE-EDU initiative](https://se-education.org).
+
+* Some ideas and structure of the application architecture were adapted from the original AB3 codebase.
