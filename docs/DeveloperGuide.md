@@ -288,7 +288,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Use cases
 
-(For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
+(For all use cases below, the **System** is the `ClieantEase` and the **Actor** is the `user`, unless specified otherwise)
 
 **Use case: Delete a person**
 
@@ -312,6 +312,32 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * 3a1. AddressBook shows an error message.
 
       Use case resumes at step 2.
+      **Use case: Add a customer**
+
+**Use case: Add a customer**
+
+**MSS**
+
+1.  User enters a command to add a new customer with the required details.
+2.  ClientEase validates the provided information.
+3.  ClientEase adds the customer to the customer list.
+4.  ClientEase displays a confirmation message showing the added customer.
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. The user provides invalid input format.
+
+    * 1a1. ClientEase shows an error message indicating the invalid field.
+
+      Use case resumes at step 1.
+
+* 2a. A customer with the same name and contact already exists.
+
+    * 2a1. ClientEase warns the user about the duplicate customer.
+
+      Use case ends.
 
 *{More to be added}*
 
