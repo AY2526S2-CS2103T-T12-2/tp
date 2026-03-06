@@ -313,6 +313,23 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case resumes at step 2.
 
+**Use case: Find a person's details**
+
+**MSS**
+
+1.  User requests to find a person by name
+2.  AddressBook shows a list of persons whose names contain the given name
+3.  User selects a person in the list
+4.  AddressBook shows the details of the selected person
+
+    Use case ends.
+
+**Extensions**
+
+* 2a. The list is empty.
+
+  Use case ends.
+
 *{More to be added}*
 
 ### Non-Functional Requirements
