@@ -8,6 +8,12 @@ src/main/resources/docs/
 /out/
 /*.iml
 
+# JDT-LS (Eclipse) files
+/.settings/
+/bin/
+/.classpath
+/.project
+
 # Storage/log files
 /data/
 /config.json
