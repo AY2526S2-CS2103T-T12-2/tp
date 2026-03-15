@@ -18,12 +18,14 @@ public class DeleteCommand extends Command {
 
     public static final String COMMAND_WORD = "delete";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Deletes the person identified by the index number used in the displayed person list.\n"
-            + "Parameters: INDEX (must be a positive integer)\n"
-            + "Example: " + COMMAND_WORD + " 1";
+    public static final String COMMAND_ALIAS = "del";
 
-    public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Person: %1$s";
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + " (or " + COMMAND_ALIAS + "): Deletes the customer identified by the index number\n"
+            + "Parameters: INDEX (must be a positive integer)\n"
+            + "Example: " + COMMAND_WORD + " 1, " + COMMAND_ALIAS + " 1";
+
+    public static final String MESSAGE_DELETE_PERSON_SUCCESS = "SUCCESS: Deleted Person: %1$s";
 
     private final Index targetIndex;
 
@@ -36,13 +38,18 @@ public class DeleteCommand extends Command {
         requireNonNull(model);
         List<Person> lastShownList = model.getFilteredPersonList();
 
+        if (lastShownList.isEmpty()) {
+            throw new CommandException("Error: Customer list is empty.");
+        }
+
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
         Person personToDelete = lastShownList.get(targetIndex.getZeroBased());
         model.deletePerson(personToDelete);
-        return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, Messages.format(personToDelete)));
+        return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS,
+                Messages.format(personToDelete)));
     }
 
     @Override
