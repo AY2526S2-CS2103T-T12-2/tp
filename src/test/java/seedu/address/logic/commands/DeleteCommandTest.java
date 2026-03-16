@@ -67,6 +67,15 @@ public class DeleteCommandTest {
     }
 
     @Test
+    public void execute_emptyList_throwsCommandException() {
+        Model emptyModel = new ModelManager();
+        DeleteCommand deleteCommand = new DeleteCommand(INDEX_FIRST_PERSON);
+
+        assertCommandFailure(deleteCommand, emptyModel,
+                "Error: Customer list is empty.");
+    }
+
+    @Test
     public void execute_invalidIndexFilteredList_throwsCommandException() {
         showPersonAtIndex(model, INDEX_FIRST_PERSON);
 
