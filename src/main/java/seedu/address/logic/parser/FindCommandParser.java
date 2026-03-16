@@ -2,12 +2,17 @@ package seedu.address.logic.parser;
 
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.function.Predicate;
 
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.person.EmailContainsKeywordsPredicate;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
+import seedu.address.model.person.Person;
 
 /**
  * Parses input arguments and creates a new FindCommand object
@@ -26,16 +31,17 @@ public class FindCommandParser implements Parser<FindCommand> {
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
         }
 
-        String[] nameKeywords = trimmedArgs.split("\\s+");
+        String[] keywords = trimmedArgs.split("\\s+");
+        List<String> nameKeywords = Arrays.stream(keywords)
+                .filter(keyword -> keyword.length() <= Name.MAX_LENGTH).toList();
 
-        if (Arrays.stream(nameKeywords).anyMatch(keyword -> keyword.length() > Name.MAX_LENGTH)) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                            String.format("Keyword length must not exceed %d characters.", Name.MAX_LENGTH))
-            );
-        }
+        List<Predicate<Person>> predicates = new ArrayList<Predicate<Person>>();
+        predicates.add(new NameContainsKeywordsPredicate(nameKeywords));
+        predicates.add(new EmailContainsKeywordsPredicate(Arrays.asList(keywords)));
 
-        return new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(nameKeywords)));
+        Predicate<Person> anyPredicate = predicates.stream().reduce(Predicate::or).orElse(person -> false);
+
+        return new FindCommand(anyPredicate);
     }
 
 }
