@@ -1,17 +1,14 @@
 package seedu.address.testutil;
 
-import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_CONTACT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
-
-import java.util.Set;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PRODUCTS;
 
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.model.person.Person;
-import seedu.address.model.tag.Tag;
 
 /**
  * A utility class for Person.
@@ -30,13 +27,19 @@ public class PersonUtil {
      */
     public static String getPersonDetails(Person person) {
         StringBuilder sb = new StringBuilder();
-        sb.append(PREFIX_NAME + person.getName().fullName + " ");
-        sb.append(PREFIX_PHONE + person.getPhone().value + " ");
-        sb.append(PREFIX_EMAIL + person.getEmail().value + " ");
-        sb.append(PREFIX_ADDRESS + person.getAddress().value + " ");
-        person.getTags().stream().forEach(
-            s -> sb.append(PREFIX_TAG + s.tagName + " ")
-        );
+        sb.append(PREFIX_NAME + person.getName().getFullName() + " ");
+        if (!person.getProducts().getItems().isEmpty()) {
+            sb.append(PREFIX_PRODUCTS).append(person.getProducts()).append(" ");
+        }
+        if (!person.getLocation().getValue().isBlank()) {
+            sb.append(PREFIX_LOCATION).append(person.getLocation()).append(" ");
+        }
+        if (!person.getDeadline().isEmpty()) {
+            sb.append(PREFIX_DEADLINE).append(person.getDeadline()).append(" ");
+        }
+        if (!person.getContact().getEntries().isEmpty()) {
+            sb.append(PREFIX_CONTACT).append(person.getContact()).append(" ");
+        }
         return sb.toString();
     }
 
@@ -45,18 +48,27 @@ public class PersonUtil {
      */
     public static String getEditPersonDescriptorDetails(EditPersonDescriptor descriptor) {
         StringBuilder sb = new StringBuilder();
-        descriptor.getName().ifPresent(name -> sb.append(PREFIX_NAME).append(name.fullName).append(" "));
-        descriptor.getPhone().ifPresent(phone -> sb.append(PREFIX_PHONE).append(phone.value).append(" "));
-        descriptor.getEmail().ifPresent(email -> sb.append(PREFIX_EMAIL).append(email.value).append(" "));
-        descriptor.getAddress().ifPresent(address -> sb.append(PREFIX_ADDRESS).append(address.value).append(" "));
-        if (descriptor.getTags().isPresent()) {
-            Set<Tag> tags = descriptor.getTags().get();
-            if (tags.isEmpty()) {
-                sb.append(PREFIX_TAG);
-            } else {
-                tags.forEach(s -> sb.append(PREFIX_TAG).append(s.tagName).append(" "));
+        descriptor.getName().ifPresent(name -> sb.append(PREFIX_NAME).append(name.getFullName()).append(" "));
+        descriptor.getProducts().ifPresent(products -> {
+            if (!products.getItems().isEmpty()) {
+                sb.append(PREFIX_PRODUCTS).append(products).append(" ");
             }
-        }
+        });
+        descriptor.getLocation().ifPresent(location -> {
+            if (!location.getValue().isBlank()) {
+                sb.append(PREFIX_LOCATION).append(location).append(" ");
+            }
+        });
+        descriptor.getDeadline().ifPresent(deadline -> {
+            if (!deadline.isEmpty()) {
+                sb.append(PREFIX_DEADLINE).append(deadline).append(" ");
+            }
+        });
+        descriptor.getContact().ifPresent(contact -> {
+            if (!contact.getEntries().isEmpty()) {
+                sb.append(PREFIX_CONTACT).append(contact).append(" ");
+            }
+        });
         return sb.toString();
     }
 }

@@ -10,6 +10,7 @@ import java.util.function.Predicate;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.EmailContainsKeywordsPredicate;
+import seedu.address.model.person.Name;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 
@@ -31,9 +32,11 @@ public class FindCommandParser implements Parser<FindCommand> {
         }
 
         String[] keywords = trimmedArgs.split("\\s+");
+        List<String> nameKeywords = Arrays.stream(keywords)
+                .filter(keyword -> keyword.length() <= Name.MAX_LENGTH).toList();
 
         List<Predicate<Person>> predicates = new ArrayList<Predicate<Person>>();
-        predicates.add(new NameContainsKeywordsPredicate(Arrays.asList(keywords)));
+        predicates.add(new NameContainsKeywordsPredicate(nameKeywords));
         predicates.add(new EmailContainsKeywordsPredicate(Arrays.asList(keywords)));
 
         Predicate<Person> anyPredicate = predicates.stream().reduce(Predicate::or).orElse(person -> false);

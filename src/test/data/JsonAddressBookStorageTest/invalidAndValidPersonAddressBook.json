@@ -1,13 +1,15 @@
 {
   "persons": [ {
     "name": "Valid Person",
-    "phone": "9482424",
-    "email": "hans@example.com",
-    "address": "4th street"
+    "products": "Chocolate cake",
+    "location": "4th street",
+    "deadline": "2026-03-10",
+    "contact": "9482424"
   }, {
-    "name": "Person With Invalid Phone Field",
-    "phone": "948asdf2424",
-    "email": "hans@example.com",
-    "address": "4th street"
+    "name": "Person With Invalid Contact Field",
+    "products": "Chocolate cake",
+    "location": "4th street",
+    "deadline": "2026-03-10",
+    "contact": "bob!yahoo"
   } ]
 }
