@@ -16,6 +16,7 @@ import java.util.Optional;
 public class Contact {
 
     public static final String MESSAGE_CONSTRAINTS = "Error: Invalid contact information.";
+    public static final int MAX_EMAIL_LENGTH = 100;
 
     /**
      * Regex for validating local phone numbers (exactly 8 digits)
@@ -41,7 +42,6 @@ public class Contact {
      */
     private static final String EMAIL_REGEX =
             "[A-Za-z0-9][A-Za-z0-9.-]*@[A-Za-z0-9][A-Za-z0-9.-]*";
-    public static final int MAX_EMAIL_LENGTH = 100;
 
     private static final Contact EMPTY = new Contact(Collections.emptyList());
 
