@@ -26,7 +26,8 @@ public class Products {
     );
     public static final int MAX_ITEM_COUNT = 5;
     public static final String MESSAGE_CONSTRAINTS = "Products must be a comma-separated list with up to "
-            + MAX_ITEM_COUNT + " items, chosen from: " + String.join(", ", ALLOWED_PRODUCTS) + ".";
+            + MAX_ITEM_COUNT + " items, chosen from:\n"
+            + String.join(", ", ALLOWED_PRODUCTS) + ".";
     public static final String MESSAGE_PRODUCTS_REQUIRED = "Error: Products are required.";
 
     private static final Map<String, String> CANONICAL_BY_LOWERCASE = buildCanonicalLookup();
