@@ -157,6 +157,15 @@ Format: `exit`
 * A farewell message will be displayed: `Goodbye! Exiting ClientEase. You have <N> customer(s) saved.`
 * The app will close automatically after a short delay.
 
+### Adding a remark to a customer : `remark`
+
+Adds or clears a remark for the customer identified by the index number shown in the displayed customer list.
+
+Format: `remark INDEX r/REMARK`
+
+* If `REMARK` is empty (e.g., `remark 2 r/`), the existing remark will be cleared.
+* Example: `remark 2 r/Likes baseball`
+
 ### Saving the data
 
 ClientEase data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
@@ -201,5 +210,5 @@ Action | Format, Examples
 **Find** | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
 **List** | `list`
 **Help** | `help`
-**Greet** | `greet`
+**Remark** | `remark INDEX r/REMARK`
 **Exit** | `exit`

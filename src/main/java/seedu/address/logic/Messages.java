@@ -45,7 +45,9 @@ public class Messages {
                 .append("\nDeadline: ")
                 .append(person.getDeadline())
                 .append("\nContact: ")
-                .append(person.getContact());
+                .append(person.getContact())
+                .append("\nRemark: ")
+                .append(person.getRemark());
         return builder.toString();
     }
 

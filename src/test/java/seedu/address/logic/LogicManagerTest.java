@@ -38,6 +38,7 @@ import seedu.address.model.person.Location;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Products;
+import seedu.address.model.person.Remark;
 import seedu.address.storage.JsonAddressBookStorage;
 import seedu.address.storage.JsonUserPrefsStorage;
 import seedu.address.storage.StorageManager;
@@ -178,7 +179,7 @@ public class LogicManagerTest {
                 + LOCATION_DESC_AMY + DEADLINE_DESC_AMY + CONTACT_DESC_AMY;
         Person expectedPerson = new Person(new Name(VALID_NAME_AMY), new Products(VALID_PRODUCTS_AMY),
                 new Location(VALID_LOCATION_AMY), new Deadline(VALID_DEADLINE_AMY),
-                new Contact(VALID_CONTACT_AMY));
+                new Contact(VALID_CONTACT_AMY), Remark.empty());
         ModelManager expectedModel = new ModelManager();
         expectedModel.addPerson(expectedPerson);
         assertCommandFailure(addCommand, CommandException.class, expectedMessage, expectedModel);

@@ -20,17 +20,19 @@ public class Person {
     private final Products products;
     private final Location location;
     private final Deadline deadline;
+    private final Remark remark;
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Products products, Location location, Deadline deadline, Contact contact) {
-        requireAllNonNull(name, products, location, deadline, contact);
+    public Person(Name name, Products products, Location location, Deadline deadline, Contact contact, Remark remark) {
+        requireAllNonNull(name, products, location, deadline, contact, remark);
         this.name = name;
         this.products = products;
         this.location = location;
         this.deadline = deadline;
         this.contact = contact;
+        this.remark = remark;
     }
 
     public Name getName() {
@@ -51,6 +53,10 @@ public class Person {
 
     public Contact getContact() {
         return contact;
+    }
+
+    public Remark getRemark() {
+        return remark;
     }
 
     /**
@@ -87,13 +93,14 @@ public class Person {
                 && products.equals(otherPerson.products)
                 && location.equals(otherPerson.location)
                 && deadline.equals(otherPerson.deadline)
-                && contact.equals(otherPerson.contact);
+                && contact.equals(otherPerson.contact)
+                && remark.equals(otherPerson.remark);
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, products, location, deadline, contact);
+        return Objects.hash(name, products, location, deadline, contact, remark);
     }
 
     @Override
@@ -104,6 +111,7 @@ public class Person {
                 .add("location", location)
                 .add("deadline", deadline)
                 .add("contact", contact)
+                .add("remark", remark)
                 .toString();
     }
 

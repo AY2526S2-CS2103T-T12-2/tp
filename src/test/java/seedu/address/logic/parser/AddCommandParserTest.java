@@ -43,6 +43,7 @@ import seedu.address.model.person.Location;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Products;
+import seedu.address.model.person.Remark;
 import seedu.address.testutil.PersonBuilder;
 
 public class AddCommandParserTest {
@@ -93,7 +94,7 @@ public class AddCommandParserTest {
     @Test
     public void parse_optionalFieldsMissing_success() {
         Person expectedPerson = new Person(new Name(AMY.getName().getFullName()), Products.empty(),
-                Location.empty(), Deadline.empty(), Contact.empty());
+                Location.empty(), Deadline.empty(), Contact.empty(), Remark.empty());
 
         assertParseSuccess(parser, NAME_DESC_AMY, new AddCommand(expectedPerson));
     }

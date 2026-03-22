@@ -14,6 +14,7 @@ import seedu.address.model.person.Deadline;
 import seedu.address.model.person.Location;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Products;
+import seedu.address.model.person.Remark;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -109,6 +110,15 @@ public class ParserUtil {
             throw new ParseException(Contact.MESSAGE_CONSTRAINTS);
         }
         return new Contact(trimmedContact);
+    }
+
+    /**
+     * Returns a {@code Remark} parsed from the given {@code String}.
+     * Leading and trailing whitespaces will be trimmed.
+     */
+    public static Remark parseRemark(String remark) {
+        requireNonNull(remark);
+        return new Remark(remark.trim());
     }
 
     /**

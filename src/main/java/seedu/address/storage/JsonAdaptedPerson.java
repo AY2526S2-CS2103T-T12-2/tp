@@ -10,6 +10,7 @@ import seedu.address.model.person.Location;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Products;
+import seedu.address.model.person.Remark;
 
 /**
  * Jackson-friendly version of {@link Person}.
@@ -23,6 +24,7 @@ class JsonAdaptedPerson {
     private final String location;
     private final String deadline;
     private final String contact;
+    private final String remark;
 
     /**
      * Constructs a {@code JsonAdaptedPerson} with the given person details.
@@ -30,12 +32,13 @@ class JsonAdaptedPerson {
     @JsonCreator
     public JsonAdaptedPerson(@JsonProperty("name") String name, @JsonProperty("products") String products,
             @JsonProperty("location") String location, @JsonProperty("deadline") String deadline,
-            @JsonProperty("contact") String contact) {
+            @JsonProperty("contact") String contact, @JsonProperty("remark") String remark) {
         this.name = name;
         this.products = products;
         this.location = location;
         this.deadline = deadline;
         this.contact = contact;
+        this.remark = remark;
     }
 
     /**
@@ -55,6 +58,9 @@ class JsonAdaptedPerson {
         contact = source.getContact().getEntries().isEmpty()
                 ? null
                 : source.getContact().toString(); // store null when contact is missing
+        remark = source.getRemark().isEmpty()
+                ? null
+                : source.getRemark().toString(); // store null when remark is missing
     }
 
     /**
@@ -103,7 +109,12 @@ class JsonAdaptedPerson {
             modelContact = new Contact(contact);
         }
 
-        return new Person(modelName, modelProducts, modelLocation, modelDeadline, modelContact);
+        Remark modelRemark = Remark.empty(); // defaults when remark is missing
+        if (remark != null && !remark.isBlank()) {
+            modelRemark = new Remark(remark);
+        }
+
+        return new Person(modelName, modelProducts, modelLocation, modelDeadline, modelContact, modelRemark);
     }
 
 }

@@ -14,6 +14,7 @@ import seedu.address.model.person.Location;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Products;
+import seedu.address.model.person.Remark;
 
 public class JsonAdaptedPersonTest {
     private static final String INVALID_NAME = "R@chel";
@@ -27,6 +28,7 @@ public class JsonAdaptedPersonTest {
     private static final String VALID_LOCATION = BENSON.getLocation().toString();
     private static final String VALID_DEADLINE = BENSON.getDeadline().toString();
     private static final String VALID_CONTACT = BENSON.getContact().toString();
+    private static final String VALID_REMARK = BENSON.getRemark().toString();
 
     @Test
     public void toModelType_validPersonDetails_returnsPerson() throws Exception {
@@ -37,7 +39,8 @@ public class JsonAdaptedPersonTest {
     @Test
     public void toModelType_invalidName_throwsIllegalValueException() {
         JsonAdaptedPerson person =
-                new JsonAdaptedPerson(INVALID_NAME, VALID_PRODUCTS, VALID_LOCATION, VALID_DEADLINE, VALID_CONTACT);
+                new JsonAdaptedPerson(INVALID_NAME, VALID_PRODUCTS, VALID_LOCATION, VALID_DEADLINE, VALID_CONTACT,
+                        VALID_REMARK);
         String expectedMessage = Name.MESSAGE_CONSTRAINTS;
         assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
@@ -45,7 +48,8 @@ public class JsonAdaptedPersonTest {
     @Test
     public void toModelType_nullName_throwsIllegalValueException() {
         JsonAdaptedPerson person =
-                new JsonAdaptedPerson(null, VALID_PRODUCTS, VALID_LOCATION, VALID_DEADLINE, VALID_CONTACT);
+                new JsonAdaptedPerson(null, VALID_PRODUCTS, VALID_LOCATION, VALID_DEADLINE, VALID_CONTACT,
+                        VALID_REMARK);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Name.class.getSimpleName());
         assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
@@ -53,7 +57,8 @@ public class JsonAdaptedPersonTest {
     @Test
     public void toModelType_invalidProducts_throwsIllegalValueException() {
         JsonAdaptedPerson person =
-                new JsonAdaptedPerson(VALID_NAME, INVALID_PRODUCTS, VALID_LOCATION, VALID_DEADLINE, VALID_CONTACT);
+                new JsonAdaptedPerson(VALID_NAME, INVALID_PRODUCTS, VALID_LOCATION, VALID_DEADLINE, VALID_CONTACT,
+                        VALID_REMARK);
         String expectedMessage = Products.MESSAGE_CONSTRAINTS;
         assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
@@ -61,7 +66,8 @@ public class JsonAdaptedPersonTest {
     @Test
     public void toModelType_invalidLocation_throwsIllegalValueException() {
         JsonAdaptedPerson person =
-                new JsonAdaptedPerson(VALID_NAME, VALID_PRODUCTS, INVALID_LOCATION, VALID_DEADLINE, VALID_CONTACT);
+                new JsonAdaptedPerson(VALID_NAME, VALID_PRODUCTS, INVALID_LOCATION, VALID_DEADLINE, VALID_CONTACT,
+                        VALID_REMARK);
         String expectedMessage = Location.MESSAGE_CONSTRAINTS;
         assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
@@ -69,7 +75,8 @@ public class JsonAdaptedPersonTest {
     @Test
     public void toModelType_invalidDeadline_throwsIllegalValueException() {
         JsonAdaptedPerson person =
-                new JsonAdaptedPerson(VALID_NAME, VALID_PRODUCTS, VALID_LOCATION, INVALID_DEADLINE, VALID_CONTACT);
+                new JsonAdaptedPerson(VALID_NAME, VALID_PRODUCTS, VALID_LOCATION, INVALID_DEADLINE, VALID_CONTACT,
+                        VALID_REMARK);
         String expectedMessage = Deadline.MESSAGE_CONSTRAINTS;
         assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
@@ -77,7 +84,8 @@ public class JsonAdaptedPersonTest {
     @Test
     public void toModelType_invalidContact_throwsIllegalValueException() {
         JsonAdaptedPerson person =
-                new JsonAdaptedPerson(VALID_NAME, VALID_PRODUCTS, VALID_LOCATION, VALID_DEADLINE, INVALID_CONTACT);
+                new JsonAdaptedPerson(VALID_NAME, VALID_PRODUCTS, VALID_LOCATION, VALID_DEADLINE, INVALID_CONTACT,
+                        VALID_REMARK);
         String expectedMessage = Contact.MESSAGE_CONSTRAINTS;
         assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
@@ -85,26 +93,26 @@ public class JsonAdaptedPersonTest {
     @Test
     public void toModelType_missingProducts_returnsPersonWithEmptyProducts() throws Exception {
         JsonAdaptedPerson person = new JsonAdaptedPerson(VALID_NAME, null, VALID_LOCATION, VALID_DEADLINE,
-                VALID_CONTACT);
+                VALID_CONTACT, VALID_REMARK);
         Person expectedPerson = new Person(new Name(VALID_NAME), Products.empty(), new Location(VALID_LOCATION),
-                new Deadline(VALID_DEADLINE), new Contact(VALID_CONTACT));
+                new Deadline(VALID_DEADLINE), new Contact(VALID_CONTACT), Remark.empty());
         assertEquals(expectedPerson, person.toModelType());
     }
 
     @Test
     public void toModelType_blankProducts_returnsPersonWithEmptyProducts() throws Exception {
         JsonAdaptedPerson person = new JsonAdaptedPerson(VALID_NAME, "", VALID_LOCATION, VALID_DEADLINE,
-                VALID_CONTACT);
+                VALID_CONTACT, VALID_REMARK);
         Person expectedPerson = new Person(new Name(VALID_NAME), Products.empty(), new Location(VALID_LOCATION),
-                new Deadline(VALID_DEADLINE), new Contact(VALID_CONTACT));
+                new Deadline(VALID_DEADLINE), new Contact(VALID_CONTACT), Remark.empty());
         assertEquals(expectedPerson, person.toModelType());
     }
 
     @Test
     public void toModelType_missingOptionalFields_returnsPersonWithEmptyOptionals() throws Exception {
-        JsonAdaptedPerson person = new JsonAdaptedPerson(VALID_NAME, VALID_PRODUCTS, null, null, null);
+        JsonAdaptedPerson person = new JsonAdaptedPerson(VALID_NAME, VALID_PRODUCTS, null, null, null, null);
         Person expectedPerson = new Person(new Name(VALID_NAME), new Products(VALID_PRODUCTS), Location.empty(),
-                Deadline.empty(), Contact.empty());
+                Deadline.empty(), Contact.empty(), Remark.empty());
         assertEquals(expectedPerson, person.toModelType());
     }
 }

@@ -36,6 +36,8 @@ public class PersonCard extends UiPart<Region> {
     private Label deadline;
     @FXML
     private Label contact;
+    @FXML
+    private Label remark;
 
     /**
      * Creates a {@code PersonCode} with the given {@code Person} and index to display.
@@ -49,6 +51,7 @@ public class PersonCard extends UiPart<Region> {
         locationValue.setText("Location: " + person.getLocation());
         deadline.setText("Deadline: " + person.getDeadline());
         contact.setText("Contact: " + person.getContact());
+        remark.setText("Remark: " + person.getRemark());
     }
 
     private static String formatProducts(Products products) {

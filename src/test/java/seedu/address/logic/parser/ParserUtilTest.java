@@ -19,6 +19,7 @@ import seedu.address.model.person.Deadline;
 import seedu.address.model.person.Location;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Products;
+import seedu.address.model.person.Remark;
 import seedu.address.model.tag.Tag;
 
 public class ParserUtilTest {
@@ -34,6 +35,7 @@ public class ParserUtilTest {
     private static final String VALID_LOCATION = "123 Main Street #0505";
     private static final String VALID_DEADLINE = "2026-03-10";
     private static final String VALID_CONTACT = "91234567; rachel@example.com";
+    private static final String VALID_REMARK = "Likes early pickups";
     private static final String VALID_TAG_1 = "friend";
     private static final String VALID_TAG_2 = "neighbour";
 
@@ -172,6 +174,24 @@ public class ParserUtilTest {
         String contactWithWhitespace = WHITESPACE + VALID_CONTACT + WHITESPACE;
         Contact expectedContact = new Contact(VALID_CONTACT);
         assertEquals(expectedContact, ParserUtil.parseContact(contactWithWhitespace));
+    }
+
+    @Test
+    public void parseRemark_null_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> ParserUtil.parseRemark(null));
+    }
+
+    @Test
+    public void parseRemark_validValueWithoutWhitespace_returnsRemark() {
+        Remark expectedRemark = new Remark(VALID_REMARK);
+        assertEquals(expectedRemark, ParserUtil.parseRemark(VALID_REMARK));
+    }
+
+    @Test
+    public void parseRemark_validValueWithWhitespace_returnsTrimmedRemark() {
+        String remarkWithWhitespace = WHITESPACE + VALID_REMARK + WHITESPACE;
+        Remark expectedRemark = new Remark(VALID_REMARK);
+        assertEquals(expectedRemark, ParserUtil.parseRemark(remarkWithWhitespace));
     }
 
     @Test

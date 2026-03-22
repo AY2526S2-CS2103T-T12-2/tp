@@ -100,7 +100,7 @@ public class EditCommand extends Command {
         Contact updatedContact = editPersonDescriptor.getContact().orElse(personToEdit.getContact());
 
         return new Person(updatedName, updatedProducts, updatedLocation,
-                updatedDeadline, updatedContact); // creates updated customer snapshot
+                updatedDeadline, updatedContact, personToEdit.getRemark()); // creates updated customer snapshot
     }
 
     @Override

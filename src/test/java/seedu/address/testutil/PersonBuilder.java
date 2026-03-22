@@ -6,6 +6,7 @@ import seedu.address.model.person.Location;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Products;
+import seedu.address.model.person.Remark;
 
 /**
  * A utility class to help with building Person objects.
@@ -22,6 +23,7 @@ public class PersonBuilder {
     private Location location;
     private Deadline deadline;
     private Contact contact;
+    private Remark remark;
 
     /**
      * Creates a {@code PersonBuilder} with the default details.
@@ -32,6 +34,7 @@ public class PersonBuilder {
         location = new Location(DEFAULT_LOCATION);
         deadline = Deadline.empty();
         contact = new Contact(DEFAULT_CONTACT);
+        remark = Remark.empty();
     }
 
     /**
@@ -43,6 +46,7 @@ public class PersonBuilder {
         location = personToCopy.getLocation();
         deadline = personToCopy.getDeadline();
         contact = personToCopy.getContact();
+        remark = personToCopy.getRemark();
     }
 
     /**
@@ -85,8 +89,16 @@ public class PersonBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code Remark} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withRemark(String remark) {
+        this.remark = new Remark(remark);
+        return this;
+    }
+
     public Person build() {
-        return new Person(name, products, location, deadline, contact);
+        return new Person(name, products, location, deadline, contact, remark);
     }
 
 }
