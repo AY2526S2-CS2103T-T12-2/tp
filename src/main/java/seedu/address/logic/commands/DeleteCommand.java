@@ -21,16 +21,23 @@ public class DeleteCommand extends Command {
     public static final String COMMAND_ALIAS = "del";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + " (or " + COMMAND_ALIAS + "): Deletes the customer identified by the index number\n"
-            + "Parameters: INDEX (must be a positive integer)\n"
-            + "Example: " + COMMAND_WORD + " 1, " + COMMAND_ALIAS + " 1";
+            + " (or " + COMMAND_ALIAS + "): Deletes the customer identified by the index number or name\n"
+            + "Parameters: INDEX (must be a positive integer) OR NAME\n"
+            + "Example: " + COMMAND_WORD + " 1, " + COMMAND_ALIAS + " 1, " + COMMAND_WORD + " John Doe";
 
     public static final String MESSAGE_DELETE_PERSON_SUCCESS = "SUCCESS: Deleted Person: %1$s";
 
     private final Index targetIndex;
+    private final String targetName;
 
     public DeleteCommand(Index targetIndex) {
         this.targetIndex = targetIndex;
+        this.targetName = null;
+    }
+
+    public DeleteCommand(String targetName) {
+        this.targetIndex = null;
+        this.targetName = targetName;
     }
 
     @Override
@@ -42,12 +49,32 @@ public class DeleteCommand extends Command {
             throw new CommandException(Messages.MESSAGE_EMPTY_CUSTOMER_LIST);
         }
 
-        if (targetIndex.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        if (targetIndex != null) {
+            if (targetIndex.getZeroBased() >= lastShownList.size()) {
+                throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            }
+
+            Person personToDelete = lastShownList.get(targetIndex.getZeroBased());
+            model.deletePerson(personToDelete);
+            return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS,
+                    Messages.format(personToDelete)));
         }
 
-        Person personToDelete = lastShownList.get(targetIndex.getZeroBased());
+        List<Person> matches = lastShownList.stream()
+                .filter(p -> p.getName().getFullName().equalsIgnoreCase(targetName))
+                .toList();
+
+        if (matches.isEmpty()) {
+            throw new CommandException("No person found with name: " + targetName);
+        }
+
+        if (matches.size() > 1) {
+            throw new CommandException("Multiple persons found with name: " + targetName);
+        }
+
+        Person personToDelete = matches.get(0);
         model.deletePerson(personToDelete);
+
         return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS,
                 Messages.format(personToDelete)));
     }
@@ -64,7 +91,8 @@ public class DeleteCommand extends Command {
         }
 
         DeleteCommand otherDeleteCommand = (DeleteCommand) other;
-        return targetIndex.equals(otherDeleteCommand.targetIndex);
+        return targetIndex.equals(otherDeleteCommand.targetIndex)
+                && targetName.equals(otherDeleteCommand.targetName);
     }
 
     @Override
