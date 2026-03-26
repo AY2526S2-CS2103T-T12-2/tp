@@ -40,8 +40,10 @@ public class FindCommandParser implements Parser<FindCommand> {
                     FindCommand.MESSAGE_USAGE));
         }
 
-        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_CONTACT,
-                PREFIX_CONTACT_SHORT, PREFIX_NAME, PREFIX_NAME_SHORT);
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args,
+                PREFIX_CONTACT, PREFIX_CONTACT_SHORT,
+                PREFIX_NAME, PREFIX_NAME_SHORT,
+                PREFIX_LOCATION, PREFIX_LOCATION_SHORT);
 
         if (!argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
