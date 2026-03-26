@@ -177,11 +177,20 @@ Expected output: `Goodbye! Exiting ClientEase. You have <N> customer(s) saved.`
 
 ### Viewing Help : `help`
 
-Shows a message explaining how to access the help page.
+Opens a help window that provides a quick overview of available commands and a link to the full User Guide.
 
 ![help message](images/helpMessage.png)
 
 **Format:** `help`
+
+### Notes
+
+- The help window does **not block** the main application — you can continue using ClientEase while it is open.
+- If the help window is already open, running `help` again will focus on the existing window.
+- Command ignore extra space
+
+> [!TIP]
+> Use the help window as a quick reference when you forget command formats, instead of searching through the full guide.
 
 ---
 
