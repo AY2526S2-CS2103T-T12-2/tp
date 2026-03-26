@@ -6,6 +6,8 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_CONTACT_SHORT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME_SHORT;
 
+import java.util.List;
+import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 import seedu.address.logic.commands.FindCommand;
@@ -14,6 +16,7 @@ import seedu.address.model.person.Contact;
 import seedu.address.model.person.ContactContainsKeywordsPredicate;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
+import seedu.address.model.person.Person;
 
 /**
  * Parses input arguments and creates a new FindCommand object
@@ -33,7 +36,7 @@ public class FindCommandParser implements Parser<FindCommand> {
                     FindCommand.MESSAGE_USAGE));
         }
 
-        var argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_CONTACT,
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_CONTACT,
                 PREFIX_CONTACT_SHORT, PREFIX_NAME, PREFIX_NAME_SHORT);
 
         if (!argMultimap.getPreamble().isEmpty()) {
@@ -41,7 +44,7 @@ public class FindCommandParser implements Parser<FindCommand> {
                     FindCommand.MESSAGE_USAGE));
         }
 
-        var nameKeywords = Stream.concat(
+        List<String> nameKeywords = Stream.concat(
                 argMultimap.getAllValues(PREFIX_NAME).stream(),
                 argMultimap.getAllValues(PREFIX_NAME_SHORT).stream())
                         .map(kw -> kw.trim()).filter(kw -> !kw.isEmpty()).toList();
@@ -54,7 +57,7 @@ public class FindCommandParser implements Parser<FindCommand> {
             );
         }
 
-        var contactKeywords = Stream.concat(
+        List<String> contactKeywords = Stream.concat(
                 argMultimap.getAllValues(PREFIX_CONTACT).stream(),
                 argMultimap.getAllValues(PREFIX_CONTACT_SHORT).stream())
                         .map(kw -> kw.trim()).filter(kw -> !kw.isEmpty()).toList();
@@ -67,12 +70,12 @@ public class FindCommandParser implements Parser<FindCommand> {
             );
         }
 
-        var namePred = new NameContainsKeywordsPredicate(nameKeywords);
-        var contactPred = new ContactContainsKeywordsPredicate(contactKeywords);
+        Predicate<Person> namePred = new NameContainsKeywordsPredicate(nameKeywords);
+        Predicate<Person> contactPred = new ContactContainsKeywordsPredicate(contactKeywords);
 
-        var pred = namePred.or(contactPred);
+        Predicate<Person> nameOrContactPred = namePred.or(contactPred);
 
-        return new FindCommand(pred);
+        return new FindCommand(nameOrContactPred);
     }
 
 }
