@@ -23,7 +23,7 @@ import seedu.address.logic.commands.ListCommand;
  */
 public class HelpWindow extends UiPart<Stage> {
 
-    public static final String USERGUIDE_URL = "https://se-education.org/addressbook-level3/UserGuide.html";
+    public static final String USERGUIDE_URL = "https://ay2526s2-cs2103t-t12-2.github.io/tp/UserGuide.html";
     public static final String HELP_MESSAGE =
             "📘 COMMAND SUMMARY\n\n"
 
