@@ -21,7 +21,7 @@ public class ProductsTest {
 
     @Test
     public void constructor_invalidProducts_throwsIllegalArgumentException() {
-        assertThrows(IllegalArgumentException.class, () -> new Products("Muffin, @@"));
+        assertThrows(IllegalArgumentException.class, () -> new Products("Muffin:0"));
     }
 
     @Test
@@ -35,12 +35,12 @@ public class ProductsTest {
         assertFalse(Products.isValidProducts("Muffin, ")); // empty item
         assertFalse(Products.isValidProducts(",Muffin")); // empty item
         assertFalse(Products.isValidProducts("Muffin,,Cookie")); // empty item
-        assertFalse(Products.isValidProducts("Muffin, @@@")); // invalid items
-        assertFalse(Products.isValidProducts("Tiramisu")); // not in placeholder list
         assertFalse(Products.isValidProducts("Muffin:0")); // zero quantity
         assertFalse(Products.isValidProducts("Muffin:-1")); // negative quantity
         assertFalse(Products.isValidProducts("Muffin:abc")); // non-numeric quantity
         assertFalse(Products.isValidProducts("Muffin:")); // colon without number
+        assertFalse(Products.isValidProducts("Muffin:10000, Muffin:1")); // per-product cap exceeded
+        assertFalse(Products.isValidProducts("Muffin:10000, Cookie:90001")); // total cap exceeded
 
         // valid products
         assertTrue(Products.isValidProducts("Chocolate Cake"));
@@ -49,8 +49,9 @@ public class ProductsTest {
         assertTrue(Products.isValidProducts("  Muffin  ,  Cookie:2  ")); // with extra spaces
         assertTrue(Products.isValidProducts("Muffin:3")); // with quantity
         assertTrue(Products.isValidProducts("Muffin:3, Cookie:2")); // multiple with quantity
-        // exactly 5 types (MAX_ITEM_TYPES)
-        assertTrue(Products.isValidProducts("Muffin, Chocolate Cake, Vanilla Cake, Brownie, Cookie"));
+        assertTrue(Products.isValidProducts("Tiramisu")); // custom product name
+        // more than 5 types is allowed
+        assertTrue(Products.isValidProducts("Muffin, Chocolate Cake, Vanilla Cake, Brownie, Cookie, Pie"));
     }
 
     @Test
@@ -101,6 +102,7 @@ public class ProductsTest {
         Products products = new Products("Chocolate Cake, Vanilla Cake");
 
         assertTrue(products.equals(new Products("Chocolate Cake, Vanilla Cake"))); // same values
+        assertTrue(products.equals(new Products("chocolate cake, vanilla cake"))); // case-insensitive
         assertTrue(products.equals(products)); // same object
         assertFalse(products.equals(null)); // null
         assertFalse(products.equals(5.0f)); // different type
@@ -114,6 +116,7 @@ public class ProductsTest {
         Products p3 = new Products("Muffin:1");
 
         assertEquals(p1.hashCode(), p2.hashCode());
+        assertEquals(new Products("muffin").hashCode(), new Products("Muffin").hashCode());
         assertNotEquals(p1.hashCode(), p3.hashCode());
     }
 }

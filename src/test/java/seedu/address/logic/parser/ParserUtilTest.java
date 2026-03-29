@@ -23,7 +23,7 @@ import seedu.address.model.tag.Tag;
 
 public class ParserUtilTest {
     private static final String INVALID_NAME = "R@chel";
-    private static final String INVALID_PRODUCTS = "Tiramisu";
+    private static final String INVALID_PRODUCTS = "Muffin:0";
     private static final String INVALID_LOCATION = " ";
     private static final String INVALID_DEADLINE = "2026-13-40";
     private static final String INVALID_CONTACT = "bob!yahoo";

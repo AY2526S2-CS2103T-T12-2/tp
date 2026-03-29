@@ -49,7 +49,7 @@ public class CommandTestUtil {
     public static final String CONTACT_DESC_BOB = " " + PREFIX_CONTACT + VALID_CONTACT_BOB;
 
     public static final String INVALID_NAME_DESC = " " + PREFIX_NAME + "James&"; // '&' not allowed in names
-    public static final String INVALID_PRODUCTS_DESC = " " + PREFIX_PRODUCTS + "Tiramisu";
+    public static final String INVALID_PRODUCTS_DESC = " " + PREFIX_PRODUCTS + "Muffin:0";
     public static final String INVALID_LOCATION_DESC = " " + PREFIX_LOCATION; // empty string not allowed
     public static final String INVALID_DEADLINE_DESC = " " + PREFIX_DEADLINE + "2026-13-40";
     public static final String INVALID_CONTACT_DESC = " " + PREFIX_CONTACT + "bob!yahoo";

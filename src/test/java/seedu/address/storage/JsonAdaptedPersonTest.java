@@ -17,7 +17,7 @@ import seedu.address.model.person.Products;
 
 public class JsonAdaptedPersonTest {
     private static final String INVALID_NAME = "R@chel";
-    private static final String INVALID_PRODUCTS = "Cake, @@@";
+    private static final String INVALID_PRODUCTS = "Cake:0";
     private static final String INVALID_LOCATION = " ";
     private static final String INVALID_DEADLINE = "2026-13-40";
     private static final String INVALID_CONTACT = "bob!yahoo";
