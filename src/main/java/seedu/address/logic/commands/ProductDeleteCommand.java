@@ -28,6 +28,9 @@ public class ProductDeleteCommand extends Command {
 
     private final Product toDelete;
 
+    /**
+     * Creates a {@code ProductDeleteCommand} to delete the specified product.
+     */
     public ProductDeleteCommand(Product product) {
         requireNonNull(product);
         this.toDelete = product;

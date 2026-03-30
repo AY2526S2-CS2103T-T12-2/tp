@@ -7,10 +7,10 @@ import java.util.Objects;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.ToStringBuilder;
-import seedu.address.model.product.Product;
-import seedu.address.model.product.UniqueProductList;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
+import seedu.address.model.product.Product;
+import seedu.address.model.product.UniqueProductList;
 
 /**
  * Wraps all data at the address-book level

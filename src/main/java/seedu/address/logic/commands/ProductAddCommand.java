@@ -23,6 +23,9 @@ public class ProductAddCommand extends Command {
 
     private final Product toAdd;
 
+    /**
+     * Creates a {@code ProductAddCommand} to add the specified product.
+     */
     public ProductAddCommand(Product product) {
         requireNonNull(product);
         this.toAdd = product;

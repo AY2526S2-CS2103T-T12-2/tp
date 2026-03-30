@@ -10,16 +10,16 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PRODUCTS;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
-import java.util.stream.Collectors;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-import seedu.address.model.product.Product;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Products;
+import seedu.address.model.product.Product;
 
 /**
  * Adds a customer to ClientEase.

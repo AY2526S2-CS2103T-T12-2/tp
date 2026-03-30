@@ -41,7 +41,8 @@ public class ProductCommandParser implements Parser<Command> {
         case ProductAddCommand.SUBCOMMAND_WORD -> parseAdd(arguments);
         case ProductDeleteCommand.SUBCOMMAND_WORD -> parseDelete(arguments);
         case ProductListCommand.SUBCOMMAND_WORD -> parseList(arguments);
-        default -> throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ProductCommand.MESSAGE_USAGE));
+        default -> throw new ParseException(
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ProductCommand.MESSAGE_USAGE));
         };
     }
 

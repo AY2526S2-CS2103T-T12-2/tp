@@ -2,13 +2,13 @@ package seedu.address.model.util;
 
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
-import seedu.address.model.product.Product;
 import seedu.address.model.person.Contact;
 import seedu.address.model.person.Deadline;
 import seedu.address.model.person.Location;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Products;
+import seedu.address.model.product.Product;
 
 /**
  * Contains utility methods for populating {@code AddressBook} with sample data.

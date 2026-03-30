@@ -38,6 +38,7 @@ import seedu.address.model.person.Location;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Products;
+import seedu.address.model.product.Product;
 import seedu.address.storage.JsonAddressBookStorage;
 import seedu.address.storage.JsonUserPrefsStorage;
 import seedu.address.storage.StorageManager;
@@ -171,6 +172,8 @@ public class LogicManagerTest {
                 new JsonUserPrefsStorage(temporaryFolder.resolve("ExceptionUserPrefs.json"));
         StorageManager storage = new StorageManager(addressBookStorage, userPrefsStorage);
 
+        Product catalogProduct = new Product(VALID_PRODUCTS_AMY);
+        model.addProduct(catalogProduct);
         logic = new LogicManager(model, storage);
 
         // Triggers the saveAddressBook method by executing an add command
@@ -180,6 +183,7 @@ public class LogicManagerTest {
                 new Location(VALID_LOCATION_AMY), new Deadline(VALID_DEADLINE_AMY),
                 new Contact(VALID_CONTACT_AMY));
         ModelManager expectedModel = new ModelManager();
+        expectedModel.addProduct(catalogProduct);
         expectedModel.addPerson(expectedPerson);
         assertCommandFailure(addCommand, CommandException.class, expectedMessage, expectedModel);
     }
