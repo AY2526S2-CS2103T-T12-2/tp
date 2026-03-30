@@ -1,12 +1,12 @@
 package seedu.address.commons.util;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.testutil.Assert.assertThrows;
 
-import java.util.List;
 import java.io.FileNotFoundException;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
@@ -168,8 +168,7 @@ public class StringUtilTest {
 
     @Test
     public void formatListByLines_invalidItemsPerLine_throwsIllegalArgumentException() {
-        assertThrows(IllegalArgumentException.class,
-                () -> StringUtil.formatListByLines(List.of("A"), 0));
+        assertThrows(IllegalArgumentException.class, () -> StringUtil.formatListByLines(List.of("A"), 0));
     }
 
 }
