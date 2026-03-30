@@ -17,6 +17,8 @@ import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.ProductAddCommand;
+import seedu.address.logic.commands.ProductListCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Person;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
@@ -96,6 +98,20 @@ public class AddressBookParserTest {
     public void parseCommand_listAlias() throws Exception {
         assertTrue(parser.parseCommand(ListCommand.COMMAND_ALIAS) instanceof ListCommand);
         assertTrue(parser.parseCommand(ListCommand.COMMAND_ALIAS + " 3") instanceof ListCommand);
+    }
+
+    @Test
+    public void parseCommand_productAdd() throws Exception {
+        assertTrue(parser.parseCommand("product add product/Muffin") instanceof ProductAddCommand);
+        assertTrue(parser.parseCommand("product add p/Muffin") instanceof ProductAddCommand);
+        assertTrue(parser.parseCommand("PRODUCT ADD P/Muffin") instanceof ProductAddCommand);
+        assertTrue(parser.parseCommand("PrOdUcT AdD Product/Muffin") instanceof ProductAddCommand);
+    }
+
+    @Test
+    public void parseCommand_productList() throws Exception {
+        assertTrue(parser.parseCommand("product list") instanceof ProductListCommand);
+        assertTrue(parser.parseCommand("PRODUCT LIST") instanceof ProductListCommand);
     }
 
     @Test

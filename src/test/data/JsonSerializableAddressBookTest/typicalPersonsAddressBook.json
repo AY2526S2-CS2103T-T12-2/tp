@@ -42,5 +42,6 @@
     "location" : "4th street",
     "deadline" : "2026-04-05",
     "contact" : "94824420"
-  } ]
+  } ],
+  "products" : [ "Brownie", "Chocolate Cake", "Cookie", "Muffin", "Vanilla Cake" ]
 }

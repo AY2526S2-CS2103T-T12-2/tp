@@ -15,12 +15,14 @@ import java.util.function.Predicate;
 import org.junit.jupiter.api.Test;
 
 import javafx.collections.ObservableList;
+import javafx.collections.FXCollections;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyUserPrefs;
+import seedu.address.model.product.Product;
 import seedu.address.model.person.Person;
 import seedu.address.testutil.PersonBuilder;
 
@@ -133,6 +135,26 @@ public class AddCommandTest {
         }
 
         @Override
+        public ObservableList<Product> getProductList() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public boolean hasProduct(Product product) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void addProduct(Product product) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void deleteProduct(Product product) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public boolean hasPerson(Person person) {
             throw new AssertionError("This method should not be called.");
         }
@@ -163,6 +185,8 @@ public class AddCommandTest {
      */
     private class ModelStubWithPerson extends ModelStub {
         private final Person person;
+        private final ObservableList<Product> products =
+                FXCollections.observableArrayList(new Product(PersonBuilder.DEFAULT_PRODUCTS));
 
         ModelStubWithPerson(Person person) {
             requireNonNull(person);
@@ -174,6 +198,17 @@ public class AddCommandTest {
             requireNonNull(person);
             return this.person.isSamePerson(person);
         }
+
+        @Override
+        public ObservableList<Product> getProductList() {
+            return products;
+        }
+
+        @Override
+        public boolean hasProduct(Product product) {
+            requireNonNull(product);
+            return products.stream().anyMatch(product::isSameProduct);
+        }
     }
 
     /**
@@ -181,6 +216,8 @@ public class AddCommandTest {
      */
     private class ModelStubAcceptingPersonAdded extends ModelStub {
         final ArrayList<Person> personsAdded = new ArrayList<>();
+        final ObservableList<Product> products =
+                FXCollections.observableArrayList(new Product(PersonBuilder.DEFAULT_PRODUCTS));
 
         @Override
         public boolean hasPerson(Person person) {
@@ -192,6 +229,31 @@ public class AddCommandTest {
         public void addPerson(Person person) {
             requireNonNull(person);
             personsAdded.add(person);
+        }
+
+        @Override
+        public ObservableList<Product> getProductList() {
+            return products;
+        }
+
+        @Override
+        public boolean hasProduct(Product product) {
+            requireNonNull(product);
+            return products.stream().anyMatch(product::isSameProduct);
+        }
+
+        @Override
+        public void addProduct(Product product) {
+            requireNonNull(product);
+            if (products.stream().noneMatch(product::isSameProduct)) {
+                products.add(product);
+            }
+        }
+
+        @Override
+        public void deleteProduct(Product product) {
+            requireNonNull(product);
+            products.removeIf(existing -> existing.isSameProduct(product));
         }
 
         @Override

@@ -7,13 +7,19 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PRODUCTS;
 
+import java.util.List;
+import java.util.Locale;
+import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.logging.Logger;
 
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.product.Product;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.Products;
 
 /**
  * Adds a customer to ClientEase.
@@ -55,6 +61,8 @@ public class AddCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
 
+        validateProductsExist(model);
+
         if (model.hasPerson(toAdd)) {
             logger.warning("Duplicate customer rejected: " + toAdd.getName());
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
@@ -63,6 +71,27 @@ public class AddCommand extends Command {
         logger.info("Adding customer: " + toAdd.getName());
         model.addPerson(toAdd); // saves new customer in model
         return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd.getName())); // shows success message
+    }
+
+    private void validateProductsExist(Model model) throws CommandException {
+        Products products = toAdd.getProducts();
+        if (products.getItems().isEmpty()) {
+            return;
+        }
+
+        List<String> allowedProducts = model.getProductList().stream()
+                .map(Product::getName)
+                .sorted(String.CASE_INSENSITIVE_ORDER)
+                .collect(Collectors.toList());
+        Set<String> allowedLower = allowedProducts.stream()
+                .map(name -> name.toLowerCase(Locale.ROOT))
+                .collect(Collectors.toSet());
+
+        for (String item : products.getItems()) {
+            if (!allowedLower.contains(item.toLowerCase(Locale.ROOT))) {
+                throw new CommandException(Products.buildUnknownProductMessage(item, allowedProducts));
+            }
+        }
     }
 
     @Override

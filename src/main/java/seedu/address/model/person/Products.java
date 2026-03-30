@@ -11,6 +11,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
+import seedu.address.commons.util.StringUtil;
 /**
  * Represents a Customer's products list with quantities.
  * Guarantees: immutable; is valid as declared in {@link #isValidProducts(String)}.
@@ -19,8 +20,11 @@ public class Products {
     public static final int MAX_QTY_PER_PRODUCT = 10000;
     public static final int MAX_TOTAL_QTY = 100000;
     public static final String MESSAGE_CONSTRAINTS = "Products must be a comma-separated list of product names, "
-            + "each optionally with a positive quantity (e.g. Muffin:3). Quantities must not exceed "
-            + MAX_QTY_PER_PRODUCT + " per product or " + MAX_TOTAL_QTY + " in total.";
+            + "each optionally with a positive quantity (e.g. Muffin:3).\n"
+            + "Quantities must not exceed " + MAX_QTY_PER_PRODUCT + " per product or " + MAX_TOTAL_QTY + " in total.";
+    public static final String MESSAGE_PRODUCT_NOT_FOUND = "Product \"%1$s\" does not exist!";
+    public static final String MESSAGE_PRODUCTS_CHOSEN_FROM = "Products must be a comma-separated, chosen from:";
+    public static final String MESSAGE_NO_PRODUCTS_AVAILABLE = "(no products in catalog)";
 
     private static final Products EMPTY = new Products(Collections.emptyMap());
     private static final java.util.logging.Logger logger =
@@ -180,5 +184,19 @@ public class Products {
 
     private static String normalizeSpaces(String input) {
         return input.trim().replaceAll("\\s+", " ");
+    }
+
+    /**
+     * Builds an error message for an unknown product with a wrapped allowed-products list.
+     */
+    public static String buildUnknownProductMessage(String missingProduct, List<String> allowedProducts) {
+        List<String> sortedProducts = new ArrayList<>(allowedProducts);
+        sortedProducts.sort(String.CASE_INSENSITIVE_ORDER);
+        String formattedList = sortedProducts.isEmpty()
+                ? MESSAGE_NO_PRODUCTS_AVAILABLE
+                : StringUtil.formatListByLines(sortedProducts, 5, " ");
+        return String.format(MESSAGE_PRODUCT_NOT_FOUND, missingProduct)
+                + "\n" + MESSAGE_PRODUCTS_CHOSEN_FROM
+                + "\n" + formattedList;
     }
 }

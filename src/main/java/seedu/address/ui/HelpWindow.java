@@ -17,6 +17,7 @@ import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.ProductCommand;
 
 /**
  * Controller for a help page
@@ -45,6 +46,15 @@ public class HelpWindow extends UiPart<Stage> {
                     + ListCommand.COMMAND_WORD + " (alias: "
                     + ListCommand.COMMAND_ALIAS + ")\n"
                     + "    List all customers\n\n"
+
+                    + ProductCommand.COMMAND_WORD + " add product/NAME (or p/NAME)\n"
+                    + "    Add a product to the catalog\n\n"
+
+                    + ProductCommand.COMMAND_WORD + " delete product/NAME (or p/NAME)\n"
+                    + "    Delete a product from the catalog\n\n"
+
+                    + ProductCommand.COMMAND_WORD + " list\n"
+                    + "    List all products\n\n"
 
                     + ClearCommand.COMMAND_WORD + "\n"
                     + "    Clear all customers\n\n"

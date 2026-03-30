@@ -11,6 +11,7 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.model.product.Product;
 import seedu.address.model.person.Person;
 
 /**
@@ -85,6 +86,27 @@ public class ModelManager implements Model {
     @Override
     public ReadOnlyAddressBook getAddressBook() {
         return addressBook;
+    }
+
+    @Override
+    public ObservableList<Product> getProductList() {
+        return addressBook.getProductList();
+    }
+
+    @Override
+    public boolean hasProduct(Product product) {
+        requireNonNull(product);
+        return addressBook.hasProduct(product);
+    }
+
+    @Override
+    public void addProduct(Product product) {
+        addressBook.addProduct(product);
+    }
+
+    @Override
+    public void deleteProduct(Product product) {
+        addressBook.removeProduct(product);
     }
 
     @Override

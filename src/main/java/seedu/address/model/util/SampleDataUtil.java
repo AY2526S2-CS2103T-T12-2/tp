@@ -2,6 +2,7 @@ package seedu.address.model.util;
 
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.product.Product;
 import seedu.address.model.person.Contact;
 import seedu.address.model.person.Deadline;
 import seedu.address.model.person.Location;
@@ -41,7 +42,20 @@ public class SampleDataUtil {
         for (Person samplePerson : getSamplePersons()) {
             sampleAb.addPerson(samplePerson);
         }
+        for (Product product : getSampleProducts()) {
+            sampleAb.addProduct(product);
+        }
         return sampleAb;
+    }
+
+    public static Product[] getSampleProducts() {
+        return new Product[] {
+            new Product("Brownie"),
+            new Product("Chocolate Cake"),
+            new Product("Cookie"),
+            new Product("Muffin"),
+            new Product("Vanilla Cake")
+        };
     }
 
 }

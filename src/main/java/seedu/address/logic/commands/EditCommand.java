@@ -9,8 +9,11 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PRODUCTS;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
@@ -18,6 +21,7 @@ import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.product.Product;
 import seedu.address.model.person.Contact;
 import seedu.address.model.person.Deadline;
 import seedu.address.model.person.Location;
@@ -77,6 +81,10 @@ public class EditCommand extends Command {
         Person personToEdit = lastShownList.get(index.getZeroBased());
         Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
 
+        if (editPersonDescriptor.getProducts().isPresent()) {
+            validateProductsExist(model, editedPerson.getProducts());
+        }
+
         if (!personToEdit.isSamePerson(editedPerson) && model.hasPerson(editedPerson)) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
@@ -84,6 +92,26 @@ public class EditCommand extends Command {
         model.setPerson(personToEdit, editedPerson); // updates customer record
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS); // refreshes list view
         return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson)));
+    }
+
+    private void validateProductsExist(Model model, Products products) throws CommandException {
+        if (products.getItems().isEmpty()) {
+            return;
+        }
+
+        List<String> allowedProducts = model.getProductList().stream()
+                .map(Product::getName)
+                .sorted(String.CASE_INSENSITIVE_ORDER)
+                .collect(Collectors.toList());
+        Set<String> allowedLower = allowedProducts.stream()
+                .map(name -> name.toLowerCase(Locale.ROOT))
+                .collect(Collectors.toSet());
+
+        for (String item : products.getItems()) {
+            if (!allowedLower.contains(item.toLowerCase(Locale.ROOT))) {
+                throw new CommandException(Products.buildUnknownProductMessage(item, allowedProducts));
+            }
+        }
     }
 
     /**

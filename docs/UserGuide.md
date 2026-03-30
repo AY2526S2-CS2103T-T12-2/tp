@@ -208,7 +208,7 @@ add name/NAME [products/PRODUCTS] [location/LOCATION] [deadline/DEADLINE] [conta
 | Parameter | Required? | Notes                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
 |---|---|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `name/NAME` | Yes | 1-100 characters after trimming and space normalisation. Only ASCII letters (A-Z), spaces, `.`, `'`, and `-`. Must contain at least one letter. Names are unique case-insensitively and with repeated spaces collapsed.                                                                                                                                                                                                                                                          |
-| `products/PRODUCTS` | No | Comma-separated list of product names (no limit). Items can optionally include a quantity using a colon (e.g., Muffin:3). Matching is case-insensitive. Empty items are invalid. Quantities must not exceed 10,000 per product or 100,000 in total.                                                                                                                                                                                                                         |
+| `products/PRODUCTS` | No | Comma-separated list of product names (no limit). Items can optionally include a quantity using a colon (e.g., Muffin:3). Matching is case-insensitive. Empty items are invalid. Quantities must not exceed 10,000 per product or 100,000 in total. Product names must already exist in the product catalog (see `product` commands).                                                                                                                                     |
 | `location/LOCATION` | No | Non-blank after trimming. Maximum length 200 characters.                                                                                                                                                                                                                                                                                                                                                                                                                         |
 | `deadline/DEADLINE` | No | Accepted formats: `yyyy-MM-dd HH:mm`, `yyyy-MM-dd`, `dd/MM/yyyy`. Entries without a time default to **23:59**.                                                                                                                                                                                                                                                                                                                                                                   |
 | `contact/CONTACT` | No | Semicolon-separated entries. Each entry must be either an 8-digit local phone number or an international phone in `+<2-3 digit country code><1-12 digit number>` format; spaces in phone numbers are ignored. Emails are up to 100 characters, must start with an alphanumeric character, contain only letters, digits, dots, and hyphens, and contain exactly one `@` with an alphanumeric at the start of the domain. Empty entries (e.g. trailing or double `;`) are invalid. |
@@ -256,6 +256,28 @@ Adds a customer named Sarah Lim with no other details. You can `edit` to fill in
 Shows a list of all persons in ClientEase.
 
 **Format:** `list`
+
+---
+
+### Managing Products : `product`
+
+Manages the product catalog used by `add` and `edit`.
+
+**Formats:**
+```
+product add product/NAME   (or p/NAME)
+product delete product/NAME   (or p/NAME)
+product list
+```
+
+**Notes:**
+- Product names are case-insensitive with spaces normalised.
+- You cannot delete a product if any customer is currently using it.
+
+**Examples:**
+- `product add product/Muffin`
+- `product delete p/Muffin`
+- `product list`
 
 ---
 

@@ -17,6 +17,7 @@ import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.ProductCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
@@ -50,6 +51,10 @@ public class AddressBookParser {
         // log messages such as the one below.
         // Lower level log messages are used sparingly to minimize noise in the code.
         logger.fine("Command word: " + commandWord + "; Arguments: " + arguments);
+
+        if (commandWord.equalsIgnoreCase(ProductCommand.COMMAND_WORD)) {
+            return new ProductCommandParser().parse(arguments);
+        }
 
         switch (commandWord) {
 

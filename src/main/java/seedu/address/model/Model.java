@@ -5,6 +5,7 @@ import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
+import seedu.address.model.product.Product;
 import seedu.address.model.person.Person;
 
 /**
@@ -51,6 +52,26 @@ public interface Model {
 
     /** Returns the AddressBook */
     ReadOnlyAddressBook getAddressBook();
+
+    /** Returns an unmodifiable view of the product catalog */
+    ObservableList<Product> getProductList();
+
+    /**
+     * Returns true if a product with the same identity as {@code product} exists in the address book.
+     */
+    boolean hasProduct(Product product);
+
+    /**
+     * Adds the given product.
+     * {@code product} must not already exist in the address book.
+     */
+    void addProduct(Product product);
+
+    /**
+     * Deletes the given product.
+     * The product must exist in the address book.
+     */
+    void deleteProduct(Product product);
 
     /**
      * Returns true if a person with the same identity as {@code person} exists in the address book.
