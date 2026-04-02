@@ -105,8 +105,8 @@ This guide assumes you are comfortable with:
 |---|---|
 | **Command Box** (top) | Where you type your commands. |
 | **Result Display** (below command box) | Shows success messages or error feedback after each command. |
-| **Customer List Panel** | Displays all customers. Each card is color-coded by **Priority Level** (Green/Yellow/Red) based on total product quantity. |
-| **Priority Badge** | A small tag (LOW, MEDIUM, HIGH) next to the name for quick status identification. |
+| **Customer List Panel** | Displays all customers. Cards are color-coded by **Priority Level** (Green/Yellow/Red) based on total product quantity when products are provided. |
+| **Priority Badge** | A small tag (LOW, MEDIUM, HIGH) shown next to the name when the customer has products. |
 | **Status Bar** (bottom) | Shows the data file save location. |
 
 ---
@@ -274,7 +274,7 @@ Short prefixes are supported: `n/` for `name/`, `p/` for `products/`, `l/` for `
 - Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …
 - At least one of the optional fields must be provided.
 - Existing values will be updated to the input values.
-- Products must be chosen from the placeholder list: Muffin, Chocolate Cake, Vanilla Cake, Brownie, Cookie.
+- Products follow the same constraints as `add` (allowed list, optional quantities, up to 5 unique types, positive quantities, and duplicates summed).
 
 **Examples:**
 
@@ -445,6 +445,6 @@ name, consider differentiating them, e.g. `John Doe (Clementi)` and `John Doe (T
 | **Index** | The 1-based number shown beside each customer in the displayed list |
 | **Deadline** | A date (and optional time) representing when an order is due |
 | **Contact** | Consolidated contact details (phone and/or email) for a customer, separated by semicolons |
-| **Product** | An item associated with a customer's order, listed under Products |
+| **Product** | An item (with quantity) associated with a customer's order, listed under Products |
 | **Home folder** | The folder where `clientease.jar` and the `data/` directory are stored |
 | **JSON file** | The data file (`ClientEase.json`) where ClientEase stores all customer records |

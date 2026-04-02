@@ -330,7 +330,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case resumes at step 1.
 
-* 2a. A customer with the same name and contact already exists.
+* 2a. A customer with the same name already exists.
 
     * 2a1. ClientEase warns the user about the duplicate customer.
 
