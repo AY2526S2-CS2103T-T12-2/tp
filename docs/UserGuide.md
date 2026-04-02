@@ -208,10 +208,10 @@ add name/NAME [products/PRODUCTS] [location/LOCATION] [deadline/DEADLINE] [conta
 | Parameter | Required? | Notes                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
 |---|---|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `name/NAME` | Yes | 1-100 characters after trimming and space normalisation. Only ASCII letters (A-Z), spaces, `.`, `'`, and `-`. Must contain at least one letter. Names are unique case-insensitively and with repeated spaces collapsed.                                                                                                                                                                                                                                                          |
-| `products/PRODUCTS` | No | Comma-separated list of 1-5 items chosen from: Muffin, Chocolate Cake, Vanilla Cake, Brownie, Cookie. Items can optionally include a quantity using a colon (e.g., Muffin:3). Matching is case-insensitive. Empty items are invalid.                                                                                                                                                                                                                                             |
+| `products/PRODUCTS` | No | Comma-separated list of items chosen from: Muffin, Chocolate Cake, Vanilla Cake, Brownie, Cookie. Matching is case-insensitive. Each item can optionally include a quantity using a colon (e.g., Muffin:3); quantities must be positive integers. If a quantity is omitted, it defaults to 1. Duplicate product types are allowed and their quantities are summed. Up to 5 unique product types total. Empty items are invalid.                                                                                                                                    |
 | `location/LOCATION` | No | Non-blank after trimming. Maximum length 200 characters.                                                                                                                                                                                                                                                                                                                                                                                                                         |
-| `deadline/DEADLINE` | No | Accepted formats: `yyyy-MM-dd HH:mm`, `yyyy-MM-dd`, `dd/MM/yyyy`. Entries without a time default to **23:59**.                                                                                                                                                                                                                                                                                                                                                                   |
-| `contact/CONTACT` | No | Semicolon-separated entries. Each entry must be either an 8-digit local phone number or an international phone in `+<2-3 digit country code><1-12 digit number>` format; spaces in phone numbers are ignored. Emails are up to 100 characters, must start with an alphanumeric character, contain only letters, digits, dots, and hyphens, and contain exactly one `@` with an alphanumeric at the start of the domain. Empty entries (e.g. trailing or double `;`) are invalid. |
+| `deadline/DEADLINE` | No | Accepted formats: `yyyy-MM-dd HH:mm`, `yyyy-MM-dd`, `dd/MM/yyyy` (24-hour time). Entries without a time default to **23:59**.                                                                                                                                                                                                                                                                                                                                                    |
+| `contact/CONTACT` | No | Semicolon-separated entries. Each entry must be either an 8-digit local phone number or an international phone in `+<2-3 digit country code><1-12 digit number>` format; spaces in phone numbers are ignored. Emails are up to 100 characters, must start with an alphanumeric character, contain only letters, digits, dots, and hyphens, and contain exactly one `@` with an alphanumeric at the start of the domain. Entries are stored with phone spaces removed and emails lowercased, then sorted. Empty entries (e.g. trailing or double `;`) are invalid. |
 
 > [!IMPORTANT]
 > **Priority Tagging:**
@@ -219,6 +219,7 @@ add name/NAME [products/PRODUCTS] [location/LOCATION] [deadline/DEADLINE] [conta
 > * **Green (Low):** 1–5 total items
 > * **Yellow (Medium):** 6–10 total items
 > * **Red (High):** 11 or more total items
+> * No priority tag is shown if the customer has no products.
 
 **Other constraints:**
 
@@ -226,7 +227,7 @@ add name/NAME [products/PRODUCTS] [location/LOCATION] [deadline/DEADLINE] [conta
 - Each prefix can appear at most once.
 - Unrecognised `<word>/` prefixes are rejected.
 - Optional fields can be omitted.
-- If a prefix is provided with no value (e.g. `products/`), the field is treated as empty.
+- For optional fields, if a prefix is provided with no value (e.g. `products/`), the field is treated as empty.
 - Non-ASCII characters (e.g. Chinese) are rejected in `name/`, `products/`, and `contact/`. `location/` currently accepts
   any characters as long as it is non-blank and within the length limit.
 
@@ -234,7 +235,7 @@ add name/NAME [products/PRODUCTS] [location/LOCATION] [deadline/DEADLINE] [conta
 > If you try to add a customer with a name that already exists (case-insensitive, spaces normalised),
 > ClientEase will reject the entry and display an error. Check the existing list with `list` before adding.
 
-**Products are listed as a numbered list under each customer card.**
+**Products are shown as a bulleted list with quantities (e.g., `- Muffin (x2)`). If no products are provided, the card shows `Products: None`.**
 
 **Examples:**
 
