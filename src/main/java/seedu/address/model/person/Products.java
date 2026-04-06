@@ -19,6 +19,7 @@ import seedu.address.commons.util.StringUtil;
 public class Products {
     public static final int MAX_QTY_PER_PRODUCT = 10000;
     public static final int MAX_TOTAL_QTY = 100000;
+    public static final int MAX_LENGTH = 80;
     public static final String MESSAGE_CONSTRAINTS = "Products must be a comma-separated list of product names, "
             + "each optionally with a positive quantity (e.g. Muffin:3).\n"
             + "Quantities must not exceed " + MAX_QTY_PER_PRODUCT + " per product or " + MAX_TOTAL_QTY + " in total.";

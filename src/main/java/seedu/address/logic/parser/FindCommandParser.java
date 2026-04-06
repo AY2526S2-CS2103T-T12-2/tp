@@ -23,6 +23,7 @@ import seedu.address.model.person.LocationContainsKeywordsPredicate;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.Products;
 import seedu.address.model.person.ProductsPredicate;
 
 /**
@@ -67,7 +68,7 @@ public class FindCommandParser implements Parser<FindCommand> {
                 PREFIX_LOCATION_SHORT, "Location", Location.MAX_LENGTH);
 
         List<String> productsKeywords = getAndCheckKeywords(argMultimap, PREFIX_PRODUCTS,
-                PREFIX_PRODUCTS_SHORT, "Products", 80); // Temporary magic number
+                PREFIX_PRODUCTS_SHORT, "Products", Products.MAX_LENGTH);
 
         Predicate<Person> namePred = new NameContainsKeywordsPredicate(nameKeywords);
         Predicate<Person> contactPred = new ContactContainsKeywordsPredicate(contactKeywords);
