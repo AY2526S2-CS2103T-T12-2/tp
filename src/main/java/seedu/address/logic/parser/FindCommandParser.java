@@ -7,6 +7,8 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION_SHORT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME_SHORT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PRODUCTS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PRODUCTS_SHORT;
 
 import java.util.List;
 import java.util.function.Predicate;
@@ -21,6 +23,7 @@ import seedu.address.model.person.LocationContainsKeywordsPredicate;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.ProductsPredicate;
 
 /**
  * Parses input arguments and creates a new FindCommand object
@@ -41,9 +44,10 @@ public class FindCommandParser implements Parser<FindCommand> {
         }
 
         Prefix[] prefixes = {
-            PREFIX_CONTACT, PREFIX_CONTACT_SHORT,
-            PREFIX_NAME, PREFIX_NAME_SHORT,
-            PREFIX_LOCATION, PREFIX_LOCATION_SHORT
+                PREFIX_CONTACT, PREFIX_CONTACT_SHORT,
+                PREFIX_NAME, PREFIX_NAME_SHORT,
+                PREFIX_LOCATION, PREFIX_LOCATION_SHORT,
+                PREFIX_PRODUCTS, PREFIX_PRODUCTS_SHORT,
         };
 
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, prefixes);
@@ -62,22 +66,26 @@ public class FindCommandParser implements Parser<FindCommand> {
         List<String> locationKeywords = getAndCheckKeywords(argMultimap, PREFIX_LOCATION,
                 PREFIX_LOCATION_SHORT, "Location", Location.MAX_LENGTH);
 
+        List<String> productsKeywords = getAndCheckKeywords(argMultimap, PREFIX_PRODUCTS,
+                PREFIX_PRODUCTS_SHORT, "Products", 80); // Temporary magic number
+
         Predicate<Person> namePred = new NameContainsKeywordsPredicate(nameKeywords);
         Predicate<Person> contactPred = new ContactContainsKeywordsPredicate(contactKeywords);
         Predicate<Person> locationPred = new LocationContainsKeywordsPredicate(locationKeywords);
+        Predicate<Person> productsPred = new ProductsPredicate(productsKeywords);
 
-        Predicate<Person> nameContactLocationPred = namePred.or(contactPred).or(locationPred);
+        Predicate<Person> fullPred = namePred.or(contactPred).or(locationPred).or(productsPred);
 
-        return new FindCommand(nameContactLocationPred);
+        return new FindCommand(fullPred);
     }
 
     private List<String> getAndCheckKeywords(ArgumentMultimap argMultimap, Prefix prefix, Prefix prefixShort,
-            String className, int maxLength) throws ParseException {
+                                             String className, int maxLength) throws ParseException {
 
         List<String> keywords = Stream.concat(
-                argMultimap.getAllValues(prefix).stream(),
-                argMultimap.getAllValues(prefixShort).stream())
-                        .map(kw -> kw.trim()).filter(kw -> !kw.isEmpty()).toList();
+                        argMultimap.getAllValues(prefix).stream(),
+                        argMultimap.getAllValues(prefixShort).stream())
+                .map(kw -> kw.trim()).filter(kw -> !kw.isEmpty()).toList();
 
         if (keywords.stream().anyMatch(kw -> kw.length() > maxLength)) {
             throw new ParseException(
