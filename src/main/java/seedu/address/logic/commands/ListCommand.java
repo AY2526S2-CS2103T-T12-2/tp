@@ -14,11 +14,17 @@ public class ListCommand extends Command {
     public static final String COMMAND_ALIAS = "ls";
 
     public static final String MESSAGE_SUCCESS = "Listed all customers";
+    public static final String MESSAGE_EMPTY = "No customers";
 
     @Override
     public CommandResult execute(Model model) {
         requireNonNull(model);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        if (model.getFilteredPersonList().isEmpty()) {
+            // Calling `list` when there are no customers should not be an error.
+            // We just show another message to indicate that more clearly.
+            return new CommandResult(MESSAGE_EMPTY);
+        }
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }
