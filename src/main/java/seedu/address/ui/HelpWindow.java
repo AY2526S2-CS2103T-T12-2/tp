@@ -4,9 +4,9 @@ import java.util.logging.Logger;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.commands.AddCommand;
@@ -77,7 +77,8 @@ public class HelpWindow extends UiPart<Stage> {
                     + "(each can repeat multiple times)\n\n"
 
                     + "Refer to the user guide:\n"
-                    + USERGUIDE_URL;
+                    + USERGUIDE_URL
+                    + "    ";
     private static final Logger logger = LogsCenter.getLogger(HelpWindow.class);
     private static final String FXML = "HelpWindow.fxml";
 
@@ -85,7 +86,7 @@ public class HelpWindow extends UiPart<Stage> {
     private Button copyButton;
 
     @FXML
-    private Label helpMessage;
+    private Text helpMessage;
 
     /**
      * Creates a new HelpWindow.

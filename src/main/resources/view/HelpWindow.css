@@ -1,5 +1,9 @@
-#copyButton, #helpMessage {
+#copyButton {
     -fx-text-fill: white;
+}
+
+#helpMessage {
+    -fx-fill: white;
 }
 
 #copyButton {

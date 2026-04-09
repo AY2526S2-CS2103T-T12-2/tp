@@ -39,7 +39,7 @@ public class Product {
         requireNonNull(test);
         String normalized = normalizeSpaces(test);
         return !normalized.isBlank()
-                && normalized.length() <= 80
+                && normalized.length() <= MAX_LENGTH
                 && !normalized.contains(",")
                 && !normalized.contains(":");
     }

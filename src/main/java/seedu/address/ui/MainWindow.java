@@ -146,6 +146,10 @@ public class MainWindow extends UiPart<Stage> {
         if (!helpWindow.isShowing()) {
             helpWindow.show();
         } else {
+            Stage root = helpWindow.getRoot();
+            if (root.isIconified()) {
+                root.setIconified(false);
+            }
             helpWindow.focus();
         }
     }
