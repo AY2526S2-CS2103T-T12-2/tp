@@ -13,7 +13,7 @@ import java.util.Objects;
 public class Product {
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Error: Invalid product name. Names must be non-blank and cannot contain ',' or ':'.";
+            "Error: Invalid product name. Names must be 1 to 80 characters long, and cannot contain ',' or ':'.";
 
     private final String name;
     private final String normalizedName;
@@ -38,6 +38,7 @@ public class Product {
         requireNonNull(test);
         String normalized = normalizeSpaces(test);
         return !normalized.isBlank()
+                && normalized.length() <= 80
                 && !normalized.contains(",")
                 && !normalized.contains(":");
     }
