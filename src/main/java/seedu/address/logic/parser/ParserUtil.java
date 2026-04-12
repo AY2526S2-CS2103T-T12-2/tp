@@ -4,15 +4,19 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
+import seedu.address.model.person.Contact;
+import seedu.address.model.person.Deadline;
+import seedu.address.model.person.Location;
 import seedu.address.model.person.Name;
-import seedu.address.model.person.Phone;
+import seedu.address.model.person.Products;
+import seedu.address.model.product.Product;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -21,6 +25,13 @@ import seedu.address.model.tag.Tag;
 public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
+    private static final Map<String, String> SHORT_PREFIX_MAPPING = Map.of(
+            "n/", CliSyntax.PREFIX_NAME.getPrefix(),
+            "p/", CliSyntax.PREFIX_PRODUCTS.getPrefix(),
+            "l/", CliSyntax.PREFIX_LOCATION.getPrefix(),
+            "d/", CliSyntax.PREFIX_DEADLINE.getPrefix(),
+            "c/", CliSyntax.PREFIX_CONTACT.getPrefix()
+    );
 
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
@@ -36,7 +47,7 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code String name} into a {@code Name}.
+     * Returns a {@code Name} parsed from the given {@code String}.
      * Leading and trailing whitespaces will be trimmed.
      *
      * @throws ParseException if the given {@code name} is invalid.
@@ -51,52 +62,99 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code String phone} into a {@code Phone}.
+     * Returns a {@code Products} parsed from the given {@code String}.
      * Leading and trailing whitespaces will be trimmed.
      *
-     * @throws ParseException if the given {@code phone} is invalid.
+     * @throws ParseException if the given {@code products} is invalid.
      */
-    public static Phone parsePhone(String phone) throws ParseException {
-        requireNonNull(phone);
-        String trimmedPhone = phone.trim();
-        if (!Phone.isValidPhone(trimmedPhone)) {
-            throw new ParseException(Phone.MESSAGE_CONSTRAINTS);
+    public static Products parseProducts(String products) throws ParseException {
+        requireNonNull(products);
+        String trimmedProducts = products.trim();
+        if (!Products.isValidProducts(trimmedProducts)) {
+            throw new ParseException(Products.MESSAGE_CONSTRAINTS);
         }
-        return new Phone(trimmedPhone);
+        return new Products(trimmedProducts);
     }
 
     /**
-     * Parses a {@code String address} into an {@code Address}.
+     * Returns a {@code Location} parsed from the given {@code String}.
      * Leading and trailing whitespaces will be trimmed.
      *
-     * @throws ParseException if the given {@code address} is invalid.
+     * @throws ParseException if the given {@code location} is invalid.
      */
-    public static Address parseAddress(String address) throws ParseException {
-        requireNonNull(address);
-        String trimmedAddress = address.trim();
-        if (!Address.isValidAddress(trimmedAddress)) {
-            throw new ParseException(Address.MESSAGE_CONSTRAINTS);
+    public static Location parseLocation(String location) throws ParseException {
+        requireNonNull(location);
+        String trimmedLocation = location.trim();
+        if (!Location.isValidLocation(trimmedLocation)) {
+            throw new ParseException(Location.MESSAGE_CONSTRAINTS);
         }
-        return new Address(trimmedAddress);
+        return new Location(trimmedLocation);
     }
 
     /**
-     * Parses a {@code String email} into an {@code Email}.
+     * Returns a {@code Deadline} parsed from the given {@code String}.
      * Leading and trailing whitespaces will be trimmed.
      *
-     * @throws ParseException if the given {@code email} is invalid.
+     * @throws ParseException if the given {@code deadline} is invalid.
      */
-    public static Email parseEmail(String email) throws ParseException {
-        requireNonNull(email);
-        String trimmedEmail = email.trim();
-        if (!Email.isValidEmail(trimmedEmail)) {
-            throw new ParseException(Email.MESSAGE_CONSTRAINTS);
+    public static Deadline parseDeadline(String deadline) throws ParseException {
+        requireNonNull(deadline);
+        String trimmedDeadline = deadline.trim();
+        if (!Deadline.isValidDeadline(trimmedDeadline)) {
+            throw new ParseException(Deadline.MESSAGE_CONSTRAINTS);
         }
-        return new Email(trimmedEmail);
+        return new Deadline(trimmedDeadline);
     }
 
     /**
-     * Parses a {@code String tag} into a {@code Tag}.
+     * Returns a {@code Contact} parsed from the given {@code String}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code contact} is invalid.
+     */
+    public static Contact parseContact(String contact) throws ParseException {
+        requireNonNull(contact);
+        String trimmedContact = contact.trim();
+        if (!Contact.isValidContact(trimmedContact)) {
+            throw new ParseException(Contact.MESSAGE_CONSTRAINTS);
+        }
+        return new Contact(trimmedContact);
+    }
+
+    /**
+     * Returns a {@code Products} parsed from the given {@code String}, or an empty products list if blank.
+     */
+    public static Products parseOptionalProducts(String products) throws ParseException {
+        requireNonNull(products);
+        return products.trim().isEmpty() ? Products.empty() : parseProducts(products);
+    }
+
+    /**
+     * Returns a {@code Location} parsed from the given {@code String}, or an empty location if blank.
+     */
+    public static Location parseOptionalLocation(String location) throws ParseException {
+        requireNonNull(location);
+        return location.trim().isEmpty() ? Location.empty() : parseLocation(location);
+    }
+
+    /**
+     * Returns a {@code Deadline} parsed from the given {@code String}, or an empty deadline if blank.
+     */
+    public static Deadline parseOptionalDeadline(String deadline) throws ParseException {
+        requireNonNull(deadline);
+        return deadline.trim().isEmpty() ? Deadline.empty() : parseDeadline(deadline);
+    }
+
+    /**
+     * Returns a {@code Contact} parsed from the given {@code String}, or an empty contact if blank.
+     */
+    public static Contact parseOptionalContact(String contact) throws ParseException {
+        requireNonNull(contact);
+        return contact.trim().isEmpty() ? Contact.empty() : parseContact(contact);
+    }
+
+    /**
+     * Returns a {@code Tag} parsed from the given {@code String}.
      * Leading and trailing whitespaces will be trimmed.
      *
      * @throws ParseException if the given {@code tag} is invalid.
@@ -111,7 +169,22 @@ public class ParserUtil {
     }
 
     /**
-     * Parses {@code Collection<String> tags} into a {@code Set<Tag>}.
+     * Returns a {@code Product} parsed from the given {@code String}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code product} is invalid.
+     */
+    public static Product parseProduct(String product) throws ParseException {
+        requireNonNull(product);
+        String trimmedProduct = product.trim();
+        if (!Product.isValidProductName(trimmedProduct)) {
+            throw new ParseException(Product.MESSAGE_CONSTRAINTS);
+        }
+        return new Product(trimmedProduct);
+    }
+
+    /**
+     * Returns {@code Collection<String> tags} parsed into a {@code Set<Tag>}.
      */
     public static Set<Tag> parseTags(Collection<String> tags) throws ParseException {
         requireNonNull(tags);
@@ -120,5 +193,17 @@ public class ParserUtil {
             tagSet.add(parseTag(tagName));
         }
         return tagSet;
+    }
+
+    /**
+     * Normalizes short-form prefixes (e.g. n/, p/) to their long-form equivalents.
+     */
+    public static String normalizeShortPrefixes(String argsString) {
+        requireNonNull(argsString);
+        String normalized = argsString;
+        for (Map.Entry<String, String> entry : SHORT_PREFIX_MAPPING.entrySet()) {
+            normalized = normalized.replaceAll("(?<=^|\\s)" + Pattern.quote(entry.getKey()), entry.getValue());
+        }
+        return normalized;
     }
 }

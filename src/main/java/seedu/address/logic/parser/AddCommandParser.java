@@ -1,61 +1,94 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_CONTACT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PRODUCTS;
 
 import java.util.Set;
-import java.util.stream.Stream;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
+import seedu.address.model.person.Contact;
+import seedu.address.model.person.Deadline;
+import seedu.address.model.person.Location;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
-import seedu.address.model.person.Phone;
-import seedu.address.model.tag.Tag;
+import seedu.address.model.person.Products;
 
 /**
- * Parses input arguments and creates a new AddCommand object
+ * Parses input arguments and creates a new AddCommand object.
  */
 public class AddCommandParser implements Parser<AddCommand> {
 
+    private static final Pattern PREFIX_PATTERN = Pattern.compile("(?<=^|\\s)([A-Za-z]+/)");
+    private static final Set<String> VALID_PREFIXES = Set.of(
+            PREFIX_NAME.getPrefix(),
+            PREFIX_PRODUCTS.getPrefix(),
+            PREFIX_LOCATION.getPrefix(),
+            PREFIX_DEADLINE.getPrefix(),
+            PREFIX_CONTACT.getPrefix()
+    );
+
     /**
-     * Parses the given {@code String} of arguments in the context of the AddCommand
-     * and returns an AddCommand object for execution.
-     * @throws ParseException if the user input does not conform the expected format
+     * Returns an {@code AddCommand} parsed from the given {@code String} of arguments.
+     * @throws ParseException if the user input does not conform the expected format.
      */
     public AddCommand parse(String args) throws ParseException {
-        ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG);
+        String normalizedArgs = ParserUtil.normalizeShortPrefixes(args);
+        verifyNoUnknownPrefixes(normalizedArgs);
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(normalizedArgs, PREFIX_NAME, PREFIX_PRODUCTS,
+                PREFIX_LOCATION,
+                PREFIX_DEADLINE, PREFIX_CONTACT);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ADDRESS, PREFIX_PHONE, PREFIX_EMAIL)
-                || !argMultimap.getPreamble().isEmpty()) {
+        if (argMultimap.getValue(PREFIX_NAME).isEmpty()
+                || argMultimap.getValue(PREFIX_NAME).get().trim().isEmpty()) {
+            throw new ParseException(Name.MESSAGE_NAME_REQUIRED);
+        }
+
+        if (!argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         }
 
-        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS);
+        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_PRODUCTS, PREFIX_LOCATION, PREFIX_DEADLINE,
+                PREFIX_CONTACT);
         Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get());
-        Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get());
-        Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get());
-        Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get());
-        Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
+        Products products = Products.empty(); // defaults when products are missing
+        if (argMultimap.getValue(PREFIX_PRODUCTS).isPresent()) {
+            products = ParserUtil.parseOptionalProducts(argMultimap.getValue(PREFIX_PRODUCTS).get());
+        }
 
-        Person person = new Person(name, phone, email, address, tagList);
+        Location location = Location.empty(); // defaults when location is missing
+        if (argMultimap.getValue(PREFIX_LOCATION).isPresent()) {
+            location = ParserUtil.parseOptionalLocation(argMultimap.getValue(PREFIX_LOCATION).get());
+        }
+
+        Deadline deadline = Deadline.empty(); // defaults to no deadline when missing
+        if (argMultimap.getValue(PREFIX_DEADLINE).isPresent()) {
+            deadline = ParserUtil.parseOptionalDeadline(argMultimap.getValue(PREFIX_DEADLINE).get());
+        }
+
+        Contact contact = Contact.empty(); // defaults when contact is missing
+        if (argMultimap.getValue(PREFIX_CONTACT).isPresent()) {
+            contact = ParserUtil.parseOptionalContact(argMultimap.getValue(PREFIX_CONTACT).get());
+        }
+
+        Person person = new Person(name, products, location, deadline, contact); // creates new customer object
 
         return new AddCommand(person);
     }
 
-    /**
-     * Returns true if none of the prefixes contains empty {@code Optional} values in the given
-     * {@code ArgumentMultimap}.
-     */
-    private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
-        return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
+    private void verifyNoUnknownPrefixes(String args) throws ParseException {
+        Matcher matcher = PREFIX_PATTERN.matcher(args);
+        while (matcher.find()) {
+            String prefix = matcher.group(1);
+            if (!VALID_PREFIXES.contains(prefix)) {
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+            }
+        }
     }
-
 }

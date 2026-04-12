@@ -262,14 +262,17 @@ _{Explain here how the data archiving feature will be implemented}_
 
 **Target user profile**:
 
+* tech-savvy home-based online business owners
+* manages a small to medium customer base
+* performs frequent daily updates to customer contact information
 * has a need to manage a significant number of contacts
-* prefer desktop apps over other types
+* prefer fast, command-line–style text input over GUI-driven interactions for efficiency
 * can type fast
+* prefer desktop apps over other types
 * prefers typing to mouse interactions
 * is reasonably comfortable using CLI apps
 
-**Value proposition**: manage contacts faster than a typical mouse/GUI driven app
-
+**Value proposition**: Enables home-based business owners to efficiently manage repeat customer contact information through fast, keyboard-driven commands, minimizing administrative overhead and keeping customer records organized and up to date without the complexity or overhead of full-scale business management systems.
 
 ### User stories
 
@@ -389,9 +392,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 1.  User requests to find a customer using a keyword.
 2.  ClientEase displays a list of matching customers.
 3.  User selects a customer from the list.
-4.  User requests to edit the selected customer's details by providing the new details. 
+4.  User requests to edit the selected customer's details by providing the new details.
 5.  ClientEase validates the new details.
-6.  ClientEase updates the customer record and displays the updated customer profile. 
+6.  ClientEase updates the customer record and displays the updated customer profile.
 
     Use case ends.
 
@@ -400,13 +403,13 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * 1a. No customers match the search keyword.
 
     * 1a1. ClientEase displays a message indicating that no customers were found.
-  
+
       Use case ends.
 
 * 5a. The new details provided are invalid.
 
     * 5a1. ClientEase displays an error message indicating the invalid field.
-  
+
       Use case resumes at step 4.
 
 *{More to be added}*

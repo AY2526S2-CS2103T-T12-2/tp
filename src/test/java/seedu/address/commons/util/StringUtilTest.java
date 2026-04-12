@@ -1,10 +1,12 @@
 package seedu.address.commons.util;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.testutil.Assert.assertThrows;
 
 import java.io.FileNotFoundException;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
@@ -138,6 +140,35 @@ public class StringUtilTest {
     @Test
     public void getDetails_nullGiven_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> StringUtil.getDetails(null));
+    }
+
+    //---------------- Tests for formatListByLines --------------------------------------
+
+    @Test
+    public void formatListByLines_emptyList_returnsEmptyString() {
+        assertEquals("", StringUtil.formatListByLines(List.of(), 5));
+    }
+
+    @Test
+    public void formatListByLines_singleLine_returnsCommaSeparated() {
+        assertEquals("A, B, C", StringUtil.formatListByLines(List.of("A", "B", "C"), 5));
+    }
+
+    @Test
+    public void formatListByLines_multiLine_wrapsAtLimit() {
+        assertEquals("A, B, C, D, E\nF",
+                StringUtil.formatListByLines(List.of("A", "B", "C", "D", "E", "F"), 5));
+    }
+
+    @Test
+    public void formatListByLines_withLinePrefix_appliesPrefixToNewLines() {
+        assertEquals("A, B, C, D, E\n F",
+                StringUtil.formatListByLines(List.of("A", "B", "C", "D", "E", "F"), 5, " "));
+    }
+
+    @Test
+    public void formatListByLines_invalidItemsPerLine_throwsIllegalArgumentException() {
+        assertThrows(IllegalArgumentException.class, () -> StringUtil.formatListByLines(List.of("A"), 0));
     }
 
 }

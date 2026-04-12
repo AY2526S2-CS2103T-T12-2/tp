@@ -8,6 +8,10 @@ plugins {
 
 mainClassName = 'seedu.address.Main'
 
+run {
+    enableAssertions = true
+}
+
 sourceCompatibility = JavaVersion.VERSION_17
 targetCompatibility = JavaVersion.VERSION_17
 
@@ -22,6 +26,7 @@ checkstyle {
 
 test {
     useJUnitPlatform()
+    enableAssertions = true
     finalizedBy jacocoTestReport
 }
 
@@ -66,7 +71,7 @@ dependencies {
 }
 
 shadowJar {
-    archiveFileName = 'addressbook.jar'
+    archiveFileName = 'ClientEase.jar'
 }
 
 defaultTasks 'clean', 'test'

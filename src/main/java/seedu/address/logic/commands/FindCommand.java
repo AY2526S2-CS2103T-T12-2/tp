@@ -1,11 +1,19 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_CONTACT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PRODUCT;
 
+import java.util.function.Predicate;
+import java.util.logging.Logger;
+
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.model.Model;
-import seedu.address.model.person.NameContainsKeywordsPredicate;
+import seedu.address.model.person.Person;
 
 /**
  * Finds and lists all persons in address book whose name contains any of the argument keywords.
@@ -15,14 +23,27 @@ public class FindCommand extends Command {
 
     public static final String COMMAND_WORD = "find";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose names contain any of "
-            + "the specified keywords (case-insensitive) and displays them as a list with index numbers.\n"
-            + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
-            + "Example: " + COMMAND_WORD + " alice bob charlie";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds customers. "
+            + "Parameters: "
+            + "[" + PREFIX_NAME + "NAME]..."
+            + "[" + PREFIX_PRODUCT + "PRODUCT]..."
+            + "[" + PREFIX_LOCATION + "LOCATION]..."
+            + "[" + PREFIX_CONTACT + "CONTACT]...\n"
+            + "Example: " + COMMAND_WORD + " "
+            + PREFIX_NAME + "alice "
+            + PREFIX_NAME + "bob "
+            + PREFIX_CONTACT + "91234567";
 
-    private final NameContainsKeywordsPredicate predicate;
+    private static final Logger logger = LogsCenter.getLogger(FindCommand.class);
 
-    public FindCommand(NameContainsKeywordsPredicate predicate) {
+    private final Predicate<Person> predicate;
+
+    /**
+     * Constructs a {@code FindCommand} from a {@code predicate}.
+     * @param predicate the predicate to filter the person list, cannot be null
+     */
+    public FindCommand(Predicate<Person> predicate) {
+        assert predicate != null : "The predicate should not be null";
         this.predicate = predicate;
     }
 
@@ -30,8 +51,9 @@ public class FindCommand extends Command {
     public CommandResult execute(Model model) {
         requireNonNull(model);
         model.updateFilteredPersonList(predicate);
+        logger.info(model.getFilteredPersonList().size() + " customers found.");
         return new CommandResult(
-                String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, model.getFilteredPersonList().size()));
+                String.format(Messages.MESSAGE_CUSTOMERS_FOUND_OVERVIEW, model.getFilteredPersonList().size()));
     }
 
     @Override

@@ -1,62 +1,60 @@
 package seedu.address.storage;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
+import seedu.address.model.person.Contact;
+import seedu.address.model.person.Deadline;
+import seedu.address.model.person.Location;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
-import seedu.address.model.person.Phone;
-import seedu.address.model.tag.Tag;
+import seedu.address.model.person.Products;
 
 /**
  * Jackson-friendly version of {@link Person}.
  */
 class JsonAdaptedPerson {
 
-    public static final String MISSING_FIELD_MESSAGE_FORMAT = "Person's %s field is missing!";
+    public static final String MISSING_FIELD_MESSAGE_FORMAT = "Customer's %s field is missing!";
 
     private final String name;
-    private final String phone;
-    private final String email;
-    private final String address;
-    private final List<JsonAdaptedTag> tags = new ArrayList<>();
+    private final String products;
+    private final String location;
+    private final String deadline;
+    private final String contact;
 
     /**
      * Constructs a {@code JsonAdaptedPerson} with the given person details.
      */
     @JsonCreator
-    public JsonAdaptedPerson(@JsonProperty("name") String name, @JsonProperty("phone") String phone,
-            @JsonProperty("email") String email, @JsonProperty("address") String address,
-            @JsonProperty("tags") List<JsonAdaptedTag> tags) {
+    public JsonAdaptedPerson(@JsonProperty("name") String name, @JsonProperty("products") String products,
+            @JsonProperty("location") String location, @JsonProperty("deadline") String deadline,
+            @JsonProperty("contact") String contact) {
         this.name = name;
-        this.phone = phone;
-        this.email = email;
-        this.address = address;
-        if (tags != null) {
-            this.tags.addAll(tags);
-        }
+        this.products = products;
+        this.location = location;
+        this.deadline = deadline;
+        this.contact = contact;
     }
 
     /**
      * Converts a given {@code Person} into this class for Jackson use.
      */
     public JsonAdaptedPerson(Person source) {
-        name = source.getName().fullName;
-        phone = source.getPhone().value;
-        email = source.getEmail().value;
-        address = source.getAddress().value;
-        tags.addAll(source.getTags().stream()
-                .map(JsonAdaptedTag::new)
-                .collect(Collectors.toList()));
+        name = source.getName().getFullName();
+        products = source.getProducts().getItems().isEmpty()
+                ? null
+                : source.getProducts().toString(); // store null when products are missing
+        location = source.getLocation().getValue().isBlank()
+                ? null
+                : source.getLocation().getValue(); // store null when location is missing
+        deadline = source.getDeadline().isEmpty()
+                ? null
+                : source.getDeadline().toString(); // store null when deadline is missing
+        contact = source.getContact().getEntries().isEmpty()
+                ? null
+                : source.getContact().toString(); // store null when contact is missing
     }
 
     /**
@@ -65,11 +63,6 @@ class JsonAdaptedPerson {
      * @throws IllegalValueException if there were any data constraints violated in the adapted person.
      */
     public Person toModelType() throws IllegalValueException {
-        final List<Tag> personTags = new ArrayList<>();
-        for (JsonAdaptedTag tag : tags) {
-            personTags.add(tag.toModelType());
-        }
-
         if (name == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Name.class.getSimpleName()));
         }
@@ -78,32 +71,39 @@ class JsonAdaptedPerson {
         }
         final Name modelName = new Name(name);
 
-        if (phone == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Phone.class.getSimpleName()));
+        Products modelProducts = Products.empty(); // defaults when products are missing
+        if (products != null && !products.isBlank()) {
+            if (!Products.isValidProducts(products)) {
+                throw new IllegalValueException(Products.MESSAGE_CONSTRAINTS);
+            }
+            modelProducts = new Products(products);
         }
-        if (!Phone.isValidPhone(phone)) {
-            throw new IllegalValueException(Phone.MESSAGE_CONSTRAINTS);
-        }
-        final Phone modelPhone = new Phone(phone);
 
-        if (email == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Email.class.getSimpleName()));
+        Location modelLocation = Location.empty(); // defaults when location is missing
+        if (location != null) {
+            if (!Location.isValidLocation(location)) {
+                throw new IllegalValueException(Location.MESSAGE_CONSTRAINTS);
+            }
+            modelLocation = new Location(location);
         }
-        if (!Email.isValidEmail(email)) {
-            throw new IllegalValueException(Email.MESSAGE_CONSTRAINTS);
-        }
-        final Email modelEmail = new Email(email);
 
-        if (address == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Address.class.getSimpleName()));
+        Deadline modelDeadline = Deadline.empty(); // defaults when deadline is missing
+        if (deadline != null && !deadline.isBlank()) {
+            if (!Deadline.isValidDeadline(deadline)) {
+                throw new IllegalValueException(Deadline.MESSAGE_CONSTRAINTS);
+            }
+            modelDeadline = new Deadline(deadline);
         }
-        if (!Address.isValidAddress(address)) {
-            throw new IllegalValueException(Address.MESSAGE_CONSTRAINTS);
-        }
-        final Address modelAddress = new Address(address);
 
-        final Set<Tag> modelTags = new HashSet<>(personTags);
-        return new Person(modelName, modelPhone, modelEmail, modelAddress, modelTags);
+        Contact modelContact = Contact.empty(); // defaults when contact is missing
+        if (contact != null) {
+            if (!Contact.isValidContact(contact)) {
+                throw new IllegalValueException(Contact.MESSAGE_CONSTRAINTS);
+            }
+            modelContact = new Contact(contact);
+        }
+
+        return new Person(modelName, modelProducts, modelLocation, modelDeadline, modelContact);
     }
 
 }

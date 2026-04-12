@@ -1,15 +1,15 @@
 package seedu.address.testutil;
 
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_CONTACT_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_CONTACT_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_DEADLINE_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_DEADLINE_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_LOCATION_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_LOCATION_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_PRODUCTS_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_PRODUCTS_BOB;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,6 +17,7 @@ import java.util.List;
 
 import seedu.address.model.AddressBook;
 import seedu.address.model.person.Person;
+import seedu.address.model.product.Product;
 
 /**
  * A utility class containing a list of {@code Person} objects to be used in tests.
@@ -24,36 +25,33 @@ import seedu.address.model.person.Person;
 public class TypicalPersons {
 
     public static final Person ALICE = new PersonBuilder().withName("Alice Pauline")
-            .withAddress("123, Jurong West Ave 6, #08-111").withEmail("alice@example.com")
-            .withPhone("94351253")
-            .withTags("friends").build();
+            .withProducts("Chocolate Cake").withLocation("123, Jurong West Ave 6, #08-111")
+            .withDeadline("2026-03-10").withContact("94351253").build();
     public static final Person BENSON = new PersonBuilder().withName("Benson Meier")
-            .withAddress("311, Clementi Ave 2, #02-25")
-            .withEmail("johnd@example.com").withPhone("98765432")
-            .withTags("owesMoney", "friends").build();
-    public static final Person CARL = new PersonBuilder().withName("Carl Kurz").withPhone("95352563")
-            .withEmail("heinz@example.com").withAddress("wall street").build();
-    public static final Person DANIEL = new PersonBuilder().withName("Daniel Meier").withPhone("87652533")
-            .withEmail("cornelia@example.com").withAddress("10th street").withTags("friends").build();
-    public static final Person ELLE = new PersonBuilder().withName("Elle Meyer").withPhone("9482224")
-            .withEmail("werner@example.com").withAddress("michegan ave").build();
-    public static final Person FIONA = new PersonBuilder().withName("Fiona Kunz").withPhone("9482427")
-            .withEmail("lydia@example.com").withAddress("little tokyo").build();
-    public static final Person GEORGE = new PersonBuilder().withName("George Best").withPhone("9482442")
-            .withEmail("anna@example.com").withAddress("4th street").build();
+            .withProducts("Vanilla Cake").withLocation("311, Clementi Ave 2, #02-25")
+            .withDeadline("2026-03-12").withContact("98765432").build();
+    public static final Person CARL = new PersonBuilder().withName("Carl Kurz").withProducts("Muffin")
+            .withLocation("wall street").withDeadline("2026-04-01").withContact("95352563").build();
+    public static final Person DANIEL = new PersonBuilder().withName("Daniel Meier").withProducts("Brownie")
+            .withLocation("10th street").withDeadline("2026-04-02").withContact("87652533").build();
+    public static final Person ELLE = new PersonBuilder().withName("Elle Meyer").withProducts("Cookie")
+            .withLocation("michegan ave").withDeadline("2026-04-03").withContact("94822240").build();
+    public static final Person FIONA = new PersonBuilder().withName("Fiona Kunz").withProducts("Chocolate Cake")
+            .withLocation("little tokyo").withDeadline("2026-04-04").withContact("94824270").build();
+    public static final Person GEORGE = new PersonBuilder().withName("George Best").withProducts("Vanilla Cake")
+            .withLocation("4th street").withDeadline("2026-04-05").withContact("94824420").build();
 
     // Manually added
-    public static final Person HOON = new PersonBuilder().withName("Hoon Meier").withPhone("8482424")
-            .withEmail("stefan@example.com").withAddress("little india").build();
-    public static final Person IDA = new PersonBuilder().withName("Ida Mueller").withPhone("8482131")
-            .withEmail("hans@example.com").withAddress("chicago ave").build();
+    public static final Person HOON = new PersonBuilder().withName("Hoon Meier").withProducts("Brownie")
+            .withLocation("little india").withDeadline("2026-04-06").withContact("84824240").build();
+    public static final Person IDA = new PersonBuilder().withName("Ida Mueller").withProducts("Muffin")
+            .withLocation("chicago ave").withDeadline("2026-04-07").withContact("84821310").build();
 
     // Manually added - Person's details found in {@code CommandTestUtil}
-    public static final Person AMY = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
-            .withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY).withTags(VALID_TAG_FRIEND).build();
-    public static final Person BOB = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
-            .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND)
-            .build();
+    public static final Person AMY = new PersonBuilder().withName(VALID_NAME_AMY).withProducts(VALID_PRODUCTS_AMY)
+            .withLocation(VALID_LOCATION_AMY).withDeadline(VALID_DEADLINE_AMY).withContact(VALID_CONTACT_AMY).build();
+    public static final Person BOB = new PersonBuilder().withName(VALID_NAME_BOB).withProducts(VALID_PRODUCTS_BOB)
+            .withLocation(VALID_LOCATION_BOB).withDeadline(VALID_DEADLINE_BOB).withContact(VALID_CONTACT_BOB).build();
 
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
 
@@ -67,10 +65,23 @@ public class TypicalPersons {
         for (Person person : getTypicalPersons()) {
             ab.addPerson(person);
         }
+        for (Product product : getTypicalProducts()) {
+            ab.addProduct(product);
+        }
         return ab;
     }
 
     public static List<Person> getTypicalPersons() {
         return new ArrayList<>(Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE));
+    }
+
+    public static List<Product> getTypicalProducts() {
+        return new ArrayList<>(List.of(
+                new Product("Brownie"),
+                new Product("Chocolate Cake"),
+                new Product("Cookie"),
+                new Product("Muffin"),
+                new Product("Vanilla Cake")
+        ));
     }
 }

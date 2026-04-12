@@ -1,8 +1,9 @@
 {
   "persons": [ {
     "name": "Hans Muster",
-    "phone": "9482424",
-    "email": "invalid@email!3e",
-    "address": "4th street"
+    "products": "Chocolate Cake",
+    "location": "4th street",
+    "deadline": "2026-03-10",
+    "contact": "bob!yahoo"
   } ]
 }

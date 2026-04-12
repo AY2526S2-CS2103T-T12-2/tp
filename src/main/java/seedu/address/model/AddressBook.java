@@ -3,11 +3,14 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 
 import java.util.List;
+import java.util.Objects;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
+import seedu.address.model.product.Product;
+import seedu.address.model.product.UniqueProductList;
 
 /**
  * Wraps all data at the address-book level
@@ -16,6 +19,7 @@ import seedu.address.model.person.UniquePersonList;
 public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniquePersonList persons;
+    private final UniqueProductList products;
 
     /*
      * The 'unusual' code block below is a non-static initialization block, sometimes used to avoid duplication
@@ -26,6 +30,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     {
         persons = new UniquePersonList();
+        products = new UniqueProductList();
     }
 
     public AddressBook() {}
@@ -49,12 +54,21 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
+     * Replaces the contents of the product list with {@code products}.
+     * {@code products} must not contain duplicate products.
+     */
+    public void setProducts(List<Product> products) {
+        this.products.setProducts(products);
+    }
+
+    /**
      * Resets the existing data of this {@code AddressBook} with {@code newData}.
      */
     public void resetData(ReadOnlyAddressBook newData) {
         requireNonNull(newData);
 
         setPersons(newData.getPersonList());
+        setProducts(newData.getProductList());
     }
 
     //// person-level operations
@@ -73,6 +87,30 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public void addPerson(Person p) {
         persons.add(p);
+    }
+
+    /**
+     * Returns true if a product with the same identity as {@code product} exists in the address book.
+     */
+    public boolean hasProduct(Product product) {
+        requireNonNull(product);
+        return products.contains(product);
+    }
+
+    /**
+     * Adds a product to the address book.
+     * The product must not already exist in the address book.
+     */
+    public void addProduct(Product product) {
+        products.add(product);
+    }
+
+    /**
+     * Removes {@code product} from this address book.
+     * {@code product} must exist in the address book.
+     */
+    public void removeProduct(Product product) {
+        products.remove(product);
     }
 
     /**
@@ -100,12 +138,18 @@ public class AddressBook implements ReadOnlyAddressBook {
     public String toString() {
         return new ToStringBuilder(this)
                 .add("persons", persons)
+                .add("products", products)
                 .toString();
     }
 
     @Override
     public ObservableList<Person> getPersonList() {
         return persons.asUnmodifiableObservableList();
+    }
+
+    @Override
+    public ObservableList<Product> getProductList() {
+        return products.asUnmodifiableObservableList();
     }
 
     @Override
@@ -120,11 +164,12 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
 
         AddressBook otherAddressBook = (AddressBook) other;
-        return persons.equals(otherAddressBook.persons);
+        return persons.equals(otherAddressBook.persons)
+                && products.equals(otherAddressBook.products);
     }
 
     @Override
     public int hashCode() {
-        return persons.hashCode();
+        return Objects.hash(persons, products);
     }
 }

@@ -18,6 +18,9 @@ Tech-savvy home-based online business owners who manage a small to medium custom
 - Tag priority customers and mark inactive customers to reduce visual clutter
 - Estimate delivery distance and calculate delivery costs based on customer location
 
+* If you are interested in using ClientEase, head over to the [_Quick Start_ section of the **User Guide**](https://ay2526s2-cs2103t-t12-2.github.io/tp/UserGuide.html#quick-start).
+* If you are interested in developing ClientEase, the [**Developer Guide**](https://ay2526s2-cs2103t-t12-2.github.io/tp/DeveloperGuide.html) is a good place to start.
+
 ### Acknowledgement
 * This project is based on the AddressBook-Level3 project created by the
   [SE-EDU initiative](https://se-education.org).

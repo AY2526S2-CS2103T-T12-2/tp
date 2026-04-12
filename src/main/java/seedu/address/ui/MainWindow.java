@@ -2,6 +2,7 @@ package seedu.address.ui;
 
 import java.util.logging.Logger;
 
+import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
@@ -10,10 +11,12 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
+import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -143,6 +146,10 @@ public class MainWindow extends UiPart<Stage> {
         if (!helpWindow.isShowing()) {
             helpWindow.show();
         } else {
+            Stage root = helpWindow.getRoot();
+            if (root.isIconified()) {
+                root.setIconified(false);
+            }
             helpWindow.focus();
         }
     }
@@ -152,15 +159,29 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     /**
-     * Closes the application.
+     * Triggers the exit command when the "Exit" menu item is clicked.
      */
     @FXML
     private void handleExit() {
+        try {
+            executeCommand(ExitCommand.COMMAND_WORD);
+        } catch (CommandException | ParseException e) {
+            logger.severe("Failed to execute exit command: " + e.getMessage());
+        }
+    }
+
+    /**
+     * The actual logic to shut down the window.
+     */
+    private void closeApp() {
         GuiSettings guiSettings = new GuiSettings(primaryStage.getWidth(), primaryStage.getHeight(),
                 (int) primaryStage.getX(), (int) primaryStage.getY());
         logic.setGuiSettings(guiSettings);
         helpWindow.hide();
-        primaryStage.hide();
+
+        PauseTransition delay = new PauseTransition(Duration.seconds(2.0));
+        delay.setOnFinished(event -> primaryStage.hide());
+        delay.play();
     }
 
     public PersonListPanel getPersonListPanel() {
@@ -183,7 +204,7 @@ public class MainWindow extends UiPart<Stage> {
             }
 
             if (commandResult.isExit()) {
-                handleExit();
+                closeApp();
             }
 
             return commandResult;

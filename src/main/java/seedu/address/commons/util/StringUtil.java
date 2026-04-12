@@ -6,6 +6,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Helper functions for handling strings.
@@ -64,5 +65,42 @@ public class StringUtil {
         } catch (NumberFormatException nfe) {
             return false;
         }
+    }
+
+    /**
+     * Formats a list into comma-separated lines with a fixed number of items per line.
+     */
+    public static String formatListByLines(List<String> items, int itemsPerLine) {
+        return formatListByLines(items, itemsPerLine, "");
+    }
+
+    /**
+     * Formats a list into comma-separated lines with a fixed number of items per line, and an optional prefix
+     * applied to each new line.
+     */
+    public static String formatListByLines(List<String> items, int itemsPerLine, String linePrefix) {
+        requireNonNull(items);
+        requireNonNull(linePrefix);
+        checkArgument(itemsPerLine > 0, "Items per line must be positive");
+
+        if (items.isEmpty()) {
+            return "";
+        }
+
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < items.size(); i++) {
+            String item = items.get(i);
+            requireNonNull(item);
+            if (i > 0) {
+                if (i % itemsPerLine == 0) {
+                    builder.append("\n").append(linePrefix);
+                } else {
+                    builder.append(", ");
+                }
+            }
+            builder.append(item);
+        }
+
+        return builder.toString();
     }
 }

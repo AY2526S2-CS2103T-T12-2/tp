@@ -17,6 +17,7 @@ import seedu.address.logic.Messages;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 
 /**
@@ -46,7 +47,7 @@ public class DeleteCommandTest {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
         DeleteCommand deleteCommand = new DeleteCommand(outOfBoundIndex);
 
-        assertCommandFailure(deleteCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandFailure(deleteCommand, model, Messages.MESSAGE_INVALID_CUSTOMER_INDEX);
     }
 
     @Test
@@ -67,6 +68,15 @@ public class DeleteCommandTest {
     }
 
     @Test
+    public void execute_emptyList_throwsCommandException() {
+        Model emptyModel = new ModelManager();
+        DeleteCommand deleteCommand = new DeleteCommand(INDEX_FIRST_PERSON);
+
+        assertCommandFailure(deleteCommand, emptyModel,
+                "Error: Customer list is empty.");
+    }
+
+    @Test
     public void execute_invalidIndexFilteredList_throwsCommandException() {
         showPersonAtIndex(model, INDEX_FIRST_PERSON);
 
@@ -76,7 +86,33 @@ public class DeleteCommandTest {
 
         DeleteCommand deleteCommand = new DeleteCommand(outOfBoundIndex);
 
-        assertCommandFailure(deleteCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandFailure(deleteCommand, model, Messages.MESSAGE_INVALID_CUSTOMER_INDEX);
+    }
+
+    @Test
+    public void execute_validNameUnfilteredList_success() {
+        Person personToDelete = model.getFilteredPersonList().get(0);
+        Name name = personToDelete.getName();
+
+        DeleteCommand deleteCommand = new DeleteCommand(name);
+
+        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS,
+                Messages.format(personToDelete));
+
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        expectedModel.deletePerson(personToDelete);
+
+        assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_nameNotFound_throwsCommandException() {
+        Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+
+        DeleteCommand deleteCommand = new DeleteCommand(new Name("Nonexistent"));
+
+        assertCommandFailure(deleteCommand, model,
+                "No person found with name: Nonexistent");
     }
 
     @Test
@@ -99,13 +135,35 @@ public class DeleteCommandTest {
 
         // different person -> returns false
         assertFalse(deleteFirstCommand.equals(deleteSecondCommand));
+
+        DeleteCommand deleteByName1 = new DeleteCommand(new Name("Alice"));
+        DeleteCommand deleteByName2 = new DeleteCommand(new Name("Alice"));
+        DeleteCommand deleteByName3 = new DeleteCommand(new Name("Bob"));
+
+        assertTrue(deleteByName1.equals(deleteByName2));
+        assertFalse(deleteByName1.equals(deleteByName3));
+
+        // index vs name -> returns false
+        assertFalse(deleteFirstCommand.equals(deleteByName1));
     }
 
     @Test
-    public void toStringMethod() {
+    public void toStringMethod_index() {
         Index targetIndex = Index.fromOneBased(1);
         DeleteCommand deleteCommand = new DeleteCommand(targetIndex);
-        String expected = DeleteCommand.class.getCanonicalName() + "{targetIndex=" + targetIndex + "}";
+        String expected = DeleteCommand.class.getCanonicalName()
+                + "{targetIndex=" + targetIndex + ", targetName=null}";
+        System.out.println(deleteCommand.toString());
+        assertEquals(expected, deleteCommand.toString());
+    }
+
+    @Test
+    public void toStringMethod_name() {
+        Name targetName = new Name("Alice");
+        DeleteCommand deleteCommand = new DeleteCommand(targetName);
+        String expected = DeleteCommand.class.getCanonicalName()
+                + "{targetIndex=null, targetName=" + targetName + "}";
+        System.out.println(deleteCommand.toString());
         assertEquals(expected, deleteCommand.toString());
     }
 
