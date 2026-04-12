@@ -16,10 +16,6 @@ public class ProductListCommand extends Command {
 
     public static final String SUBCOMMAND_WORD = "list";
 
-    public static final String MESSAGE_USAGE = ProductCommand.COMMAND_WORD + " " + SUBCOMMAND_WORD
-            + ": Lists all products in the catalog.\n"
-            + "Example: " + ProductCommand.COMMAND_WORD + " " + SUBCOMMAND_WORD;
-
     public static final String MESSAGE_EMPTY = "No products in the catalog.";
     public static final String MESSAGE_SUCCESS = "Products in catalog:\n%1$s";
 

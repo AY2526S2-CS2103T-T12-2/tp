@@ -13,7 +13,7 @@ public class ExitCommand extends Command {
 
     @Override
     public CommandResult execute(Model model) {
-        int count = model.getFilteredPersonList().size();
+        int count = model.getAddressBook().getPersonList().size();
         String message = String.format(MESSAGE_EXIT_ACKNOWLEDGEMENT, count);
 
         return new CommandResult(message, false, true);
