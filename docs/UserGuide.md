@@ -177,7 +177,9 @@ Expected output: `Goodbye! Exiting ClientEase. You have <N> customer(s) saved.`
   a contact.
 - Parameters can be entered **in any order**. For example, `add name/John Doe contact/98765432` is the same as
   `add contact/98765432 name/John Doe`.
-- Commands that take no parameters (e.g. `help`, `list`, `exit`) will **ignore any extra text** you type after them.
+- Commands that do not take parameters, such as `help`, `list`, `clear`, `exit`, and `product list`, will **ignore any extra text** you type after them.
+- Example: `help please` works the same as `help`.
+- Example: `product list now` works the same as `product list`.
 - If a long command wraps visually in this guide, type it as a single line in the application.
 - If you are using a **PDF version** of this guide, be careful when copying multi-line commands — line breaks may cause
   spaces to be omitted.
@@ -224,7 +226,6 @@ Opens a help window that provides a quick overview of available commands and a l
 
 - The help window does **not block** the main application — you can continue using ClientEase while it is open.
 - If the help window is already open, running `help` again will focus on the existing window.
-- The `help` command ignores any extra text after it.
 
 > **Tip:** Use the help window as a quick reference when you forget command formats, instead of searching through the full guide.
 
