@@ -109,7 +109,7 @@ This guide assumes you are comfortable with:
 |---|---|
 | **Command Box** (top) | Where you type your commands. |
 | **Result Display** (below command box) | Shows success messages or error feedback after each command. |
-| **Customer List Panel** | Displays all customers. Cards are color-coded by **Priority Level** (Green/Yellow/Red) based on total product quantity when products are provided. |
+| **Customer List Panel** | Displays all customers. Cards are colour-coded by **Priority Level** (Green/Yellow/Red) based on total product quantity when products are provided. |
 | **Priority Badge** | A small tag (LOW, MEDIUM, HIGH) shown next to the name when the customer has products. |
 | **Status Bar** (bottom) | Shows the data file save location. |
 
@@ -128,10 +128,9 @@ Expected output: All sample customers are shown in the Customer List Panel.
 
 **Step 2 - Add your first real customer:**
 ```
-add name/Jane Tan contact/91234567;jane@mybusiness.com \
-products/Chocolate Cake:2, Muffin:5 location/Tampines deadline/2025-12-31
+add name/Jane Tan contact/91234567;jane@mybusiness.com products/Chocolate Cake:2, Muffin:5 location/Tampines deadline/2025-12-31
 ```
-Type the command on one line without the `\`.
+Enter the full command as a single line in the application. The text may wrap visually in this guide, but do not press Enter until the full command has been typed.
 Expected output: `Added Customer: Jane Tan`
 
 **Step 3 - Find a customer by name:**
@@ -175,9 +174,27 @@ Expected output: `Goodbye! Exiting ClientEase. You have <N> customer(s) saved.`
 - Parameters can be entered **in any order**. For example, `add name/John Doe contact/98765432` is the same as
   `add contact/98765432 name/John Doe`.
 - Commands that take no parameters (e.g. `help`, `list`, `exit`) will **ignore any extra text** you type after them.
-- Line breaks and trailing `\` in examples are **for readability only**. Type the full command on a single line without `\`.
+- If a long command wraps visually in this guide, type it as a single line in the application.
 - If you are using a **PDF version** of this guide, be careful when copying multi-line commands — line breaks may cause
   spaces to be omitted.
+
+### Data Normalisation
+
+To keep stored data consistent and reduce accidental duplicates, ClientEase normalises some input before saving it.
+
+#### Contact numbers
+
+- Spaces in phone numbers are removed before storage.
+- Example: `+65 9123 4567` is stored internally as `+6591234567`.
+- Email addresses are converted to lowercase before storage.
+
+#### Search behaviour
+
+- The `find` command matches against stored values.
+- When searching by contact number, omit spaces in your search term.
+- Example: use `find c/+6591234567` instead of `find c/+65 9123 4567`.
+
+> **Important:** This applies only to spaces in phone numbers. Hyphens and parentheses are not accepted as valid phone-number input.
 
 ---
 
@@ -213,7 +230,7 @@ add name/NAME [products/PRODUCTS] [location/LOCATION] [deadline/DEADLINE] [conta
 | Parameter | Required? | Notes                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
 |---|---|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `name/NAME` | Yes | 1-100 characters after trimming and space normalisation. Only ASCII letters (A-Z), spaces, `.`, `'`, and `-`. Must contain at least one letter. Names are unique case-insensitively and with repeated spaces collapsed.                                                                                                                                                                                                                                                          |
-| `products/PRODUCTS` | No | Comma-separated list of product names from the product catalog. There is no fixed limit on the number of product names, but quantities must not exceed 10,000 per product or 100,000 in total. Items can optionally include a quantity using a colon (e.g., Muffin:3); if omitted, quantity defaults to 1. Matching is case-insensitive and spaces are normalised. Empty items are invalid. Duplicate product names are allowed and their quantities are summed. Use `product add` to create products before referencing them. |
+| `products/PRODUCTS` | No | Comma-separated list of product names from the product catalogue. There is no fixed limit on the number of product names, but quantities must not exceed 10,000 per product or 100,000 in total. Items can optionally include a quantity using a colon (e.g., Muffin:3); if omitted, quantity defaults to 1. Matching is case-insensitive and spaces are normalised. Empty items are invalid. Duplicate product names are allowed and their quantities are summed. Use `product add` to create products before referencing them. |
 | `location/LOCATION` | No | Non-blank after trimming. Maximum length 200 characters.                                                                                                                                                                                                                                                                                                                                                                                                                         |
 | `deadline/DEADLINE` | No | Accepted formats: `yyyy-MM-dd HH:mm`, `yyyy-MM-dd`, `dd/MM/yyyy` (24-hour time). Entries without a time default to **23:59**.                                                                                                                                                                                                                                                                                                                                                    |
 | `contact/CONTACT` | No | Semicolon-separated entries. Each entry must be either an 8-digit local phone number or an international phone in `+<2-3 digit country code><1-12 digit number>` format; spaces in phone numbers are ignored. Emails are up to 100 characters, must start with an alphanumeric character, contain only letters, digits, dots, and hyphens, and contain exactly one `@` with an alphanumeric at the start of the domain. Entries are stored with phone spaces removed and emails lowercased, then sorted. Empty entries (e.g. trailing or double `;`) are invalid. |
@@ -232,7 +249,7 @@ add name/NAME [products/PRODUCTS] [location/LOCATION] [deadline/DEADLINE] [conta
 - Optional fields can be omitted.
 - For optional fields, if a prefix is provided with no value (e.g. `products/`), the field is treated as empty.
 - Non-ASCII characters (e.g. Chinese) are rejected in `name/` and `contact/`. `products/` values must match product
-  names already in the product catalog (case-insensitive, spaces normalised). Product names cannot contain `,` or `:`.
+  names already in the product catalogue (case-insensitive, spaces normalised). Product names cannot contain `,` or `:`.
   `location/` accepts any characters as long as it is non-blank and within the length limit.
 
 > **Warning:** If you try to add a customer with a name that already exists (case-insensitive, extra spaces ignored),
@@ -244,10 +261,9 @@ add name/NAME [products/PRODUCTS] [location/LOCATION] [deadline/DEADLINE] [conta
 
 **Example 1: Add a customer with full details**
 ```
-add name/John Doe contact/98765432;johnd@example.com \
-products/Chocolate Cake:2, Muffin:5 location/Clementi Ave 2 deadline/2025-12-31
+add name/John Doe contact/98765432;johnd@example.com products/Chocolate Cake:2, Muffin:5 location/Clementi Ave 2 deadline/2025-12-31
 ```
-Type the command on one line without the `\`.
+Enter the full command as a single line in the application.
 Effect: Adds a customer named John Doe with products, location, deadline (31 Dec 2025 at 23:59), and contact details.
 
 **Example 2: Add a customer with name only**
@@ -269,7 +285,7 @@ Shows a list of all customers in ClientEase.
 
 ### Managing Products : `product`
 
-Manages the product catalog used by `add` and `edit`.
+Manages the product catalogue used by `add` and `edit`.
 
 **Formats:**
 ```
@@ -284,7 +300,7 @@ product list
 - You cannot delete a product if any customer is currently using it.
 - `product` commands, subcommands, and the `product/` or `p/` prefix are case-insensitive.
 - `product list` shows products in alphabetical order.
-- If the catalog is empty, `add` and `edit` will reject any `products/` input and show "(no products in catalog)" in the
+- If the catalogue is empty, `add` and `edit` will reject any `products/` input and show "(no products in catalogue)" in the
   allowed list.
 
 **Examples:**
@@ -329,7 +345,7 @@ Effect: Updates the name, products, and location of the 2nd customer.
 
 ### Locating Customers : `find`
 
-Finds persons whose names contain any of the given keywords.
+Finds customers whose details match the given keywords.
 
 **Format:**
 ```
@@ -341,10 +357,12 @@ Short prefixes are supported: `n/` for `name/`, `c/` for `contact/`, `l/` for `l
 - `NAME` and `PRODUCT` are single words, `CONTACT` and `LOCATION` are strings. Each field can repeat multiple times.
 - At least one of the fields needs to be provided once.
 - The search is case-insensitive. e.g. `hans` will match `Hans`.
-- The name, contact, location, and product list of each users will be searched.
+- The name, contact, location, and product list of each customer will be searched.
 - For name and products, only full words will be matched. e.g. `Han` will not match `Hans`.
 - For location and contact, any substring will be matched. e.g. `123` will match `1234@mail.com`.
 - Searching multiple personal details (name, contact, or location) or multiple products will match any of those items; however, searching across both categories will only show results that match at least one from each.
+
+**Contact search tip:** Phone numbers are matched against the stored normalised value with spaces removed. For example, if a number is stored as `+6591234567`, search with `find c/+6591234567`, not `find c/+65 9123 4567`.
 
 **Examples:**
 
@@ -380,7 +398,7 @@ Effect: Deletes the 2nd customer in the currently displayed list.
 
 **Example 2: Delete after filtering**
 ```
-find Betsy
+find name/Betsy
 delete 1
 ```
 Effect: Deletes the 1st customer in the filtered results.
@@ -415,7 +433,7 @@ Clears all entries from ClientEase.
 
 ### Exiting the App : `exit`
 
-Exits the program after displaying a farewell message with the current customer count.
+Exits the programme after displaying a farewell message with the current customer count.
 
 **Format:** `exit`
 
@@ -426,7 +444,7 @@ Exits the program after displaying a farewell message with the current customer 
 
 ## Saving the Data
 
-ClientEase **automatically saves** your data to disk after every command that changes data. There is no Save button and
+ClientEase **automatically saves** your data to disc after every command that changes data. There is no Save button and
 no need to save manually.
 
 Your data is stored at:
@@ -466,7 +484,7 @@ name, consider differentiating them, e.g. `John Doe (Clementi)` and `John Doe (T
 
 1. **When using multiple screens**, if you move the application to a secondary screen, and later switch to using only the primary screen, the GUI will open off-screen. Workaround: delete the `preferences.json` file created by the application before running the application again.
 
-2. **If you minimize the Help Window** and then run the `help` command (or use the `Help` menu, or the keyboard shortcut `F1`) again, the original Help Window will remain minimized, and no new Help Window will appear. Workaround: manually restore the minimized Help Window.
+2. **If you minimise the Help Window** and then run the `help` command (or use the `Help` menu, or the keyboard shortcut `F1`) again, the original Help Window will remain minimised, and no new Help Window will appear. Workaround: manually restore the minimised Help Window.
 
 ---
 
@@ -478,7 +496,7 @@ name, consider differentiating them, e.g. `John Doe (Clementi)` and `John Doe (T
 | **Add** | `add name/NAME [products/PRODUCTS] [location/LOCATION] [deadline/DEADLINE] [contact/CONTACT]` | `add name/John Doe products/Muffin:2 location/Clementi` |
 | **List** | `list` | `list`                                                                                               |
 | **Edit** | `edit INDEX [name/NAME] [products/PRODUCTS] [location/LOCATION] [deadline/DATE] [contact/CONTACT]` | `edit 2 name/James Lee contact/jameslee@example.com`                                                 |
-| **Find** | `find KEYWORD [MORE_KEYWORDS]` | `find James Jake`                                                                                    |
+| **Find** | `find [name/NAME]...[contact/CONTACT]...[location/LOCATION]...[product/PRODUCT]...` | `find name/James` |
 | **Delete** | `delete INDEX` | `delete 3`                                                                                           |
 | **Clear** | `clear` | `clear`                                                                                              |
 | **Exit** | `exit` | `exit`                                                                                               |
@@ -502,6 +520,6 @@ name, consider differentiating them, e.g. `John Doe (Clementi)` and `John Doe (T
 | **Index** | The number shown beside each customer in the displayed list. It starts from 1. |
 | **Deadline** | A date (and optional time) representing when an order is due |
 | **Contact** | Consolidated contact details (phone and/or email) for a customer, separated by semicolons |
-| **Product** | An item from the product catalog associated with a customer's order, listed under Products |
+| **Product** | An item from the product catalogue associated with a customer's order, listed under Products |
 | **Home folder** | The folder where `clientease.jar` and the `data/` directory are stored |
 | **JSON file** | The data file (`ClientEase.json`) where ClientEase stores all customer records |
