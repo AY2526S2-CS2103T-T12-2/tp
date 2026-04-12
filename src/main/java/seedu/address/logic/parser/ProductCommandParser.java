@@ -58,10 +58,7 @@ public class ProductCommandParser implements Parser<Command> {
         return new ProductDeleteCommand(product);
     }
 
-    private Command parseList(String args) throws ParseException {
-        if (!args.trim().isEmpty()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ProductListCommand.MESSAGE_USAGE));
-        }
+    private Command parseList(String args) {
         return new ProductListCommand();
     }
 

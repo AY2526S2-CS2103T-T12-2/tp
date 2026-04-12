@@ -112,6 +112,7 @@ public class AddressBookParserTest {
     public void parseCommand_productList() throws Exception {
         assertTrue(parser.parseCommand("product list") instanceof ProductListCommand);
         assertTrue(parser.parseCommand("PRODUCT LIST") instanceof ProductListCommand);
+        assertTrue(parser.parseCommand("product list extra") instanceof ProductListCommand);
     }
 
     @Test
