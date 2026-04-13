@@ -126,10 +126,13 @@ public class HelpWindow extends UiPart<Stage> {
      */
     public void show() {
         logger.fine("Showing help page about the application.");
-        getRoot().show();
-        getRoot().centerOnScreen();
+        Stage helpStage = getRoot();
+        double screenWidth = javafx.stage.Screen.getPrimary().getVisualBounds().getWidth();
+        helpStage.setX(screenWidth - 450);
+        helpStage.setY(100);
+        helpStage.show();
+        helpStage.requestFocus();
     }
-
     /**
      * Returns true if the help window is currently being shown.
      */
