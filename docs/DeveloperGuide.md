@@ -9,7 +9,15 @@ title: Developer Guide
 
 ## **Acknowledgements**
 
-* {list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well}
+* This project is based on the original AddressBook Level 3 (AB3) project by the [SE-EDU initiative](https://se-education.org).
+
+* The project uses the following third-party libraries:
+    * JavaFX – for building the graphical user interface
+    * Jackson – for JSON data storage and parsing
+    * JUnit 5 – for testing
+
+* We also referred to the SE-EDU documentation and guides:
+    * https://se-education.org/guides/
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -72,7 +80,7 @@ The **API** of this component is specified in [`Ui.java`](https://github.com/se-
 
 ![Structure of the UI Component](images/UiClassDiagram.png)
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class which captures the commonalities between classes that represent parts of the visible GUI.
+The UI consists of a `MainWindow` that is made up of parts e.g. `CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `HelpWindow` and `PersonCard`. All these, including the `MainWindow`, inherit from the abstract `UiPart` class which captures the commonalities between classes that represent parts of the visible GUI.
 
 The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/resources/view/MainWindow.fxml)
 
@@ -81,7 +89,7 @@ The `UI` component,
 * executes user commands using the `Logic` component.
 * listens for changes to `Model` data so that the UI can be updated with the modified data.
 * keeps a reference to the `Logic` component, because the `UI` relies on the `Logic` to execute commands.
-* depends on some classes in the `Model` component, as it displays `Person` object residing in the `Model`.
+* depends on some classes in the `Model` component, as it displays `Person` objects residing in the `Model`. `PersonCard` displays products, location, deadline, and contact information, and applies priority styling based on the total product quantity. `HelpWindow` also shows the command summary and the user guide link.
 
 ### Logic component
 
@@ -237,13 +245,6 @@ The following activity diagram summarizes what happens when a user executes a ne
   * Pros: Will use less memory (e.g. for `delete`, just save the person being deleted).
   * Cons: We must ensure that the implementation of each individual command are correct.
 
-_{more aspects and alternatives to be added}_
-
-### \[Proposed\] Data archiving
-
-_{Explain here how the data archiving feature will be implemented}_
-
-
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Documentation, logging, testing, configuration, dev-ops**
@@ -279,33 +280,23 @@ _{Explain here how the data archiving feature will be implemented}_
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
 | Priority | As a …​                                    | I want to …​                     | So that I can…​                                                        |
-| -------- | ----------------------------------------------- | ------------------------------ | ---------------------------------------------------------------------- |
-| `* *`    | first-time user                                 | see a short welcome message explaining what ClientEase does                     | understand the purpose of the app immediately                                             |
+| -------- | ----------------------------------------------- | ------------------------------ | ---------------------------------------------------------------------- | 
 | `* *`    | first-time user                                 | look at sample customer data when I open the app                                | quickly understand how customer information is structured                                 |
 | `* *`    | first-time user                                 | look through sample customer profiles                                           | see what kinds of details I am able to store                                              |
 | `* * *`  | first-time user                                 | easily identify the main actions (add, edit, delete)                            | not feel overwhelmed when first using the app                                             |
 | `* * *`  | first-time user                                 | edit an existing customer entry                                                 | understand how updates to customer information work                                       |
 | `* * *`  | first-time user                                 | add a new customer using test data                                              | try out the app without fear of making mistakes                                           |
 | `* *`    | beginner user                                   | set a due date for an order                                                     | manage upcoming deadlines                                                                 |
-| `* * *`  | beginner user                                   | mark an order as completed                                                      | track which requests have been fulfilled                                                  |
-| `* *`    | beginner user                                   | record whether an order is delivery or self-collection                          | coordinate arrangements properly                                                          |
-| `* *`    | beginner user                                   | calculate delivery cost based on location                                       | charge customers correctly                                                                |
 | `* *`    | beginner user                                   | review a customer's order history                                               | confirm their previous preferences                                                        |
-| `* * *`  | beginner user                                   | view only active orders                                                         | focus on current tasks                                                                    |
 | `*`      | user more familiar with the app                 | try to get familiar with the CLI                                                | start to use the app more efficiently                                                     |
 | `* * *`  | user more familiar with the app                 | make simple search queries                                                      | find customers more quickly                                                               |
 | `* *`    | frequent user                                   | set the app to open at startup                                                  | start working inside the app immediately                                                  |
 | `*`      | tech-savvy user                                 | use the CLI to input commands                                                   | perform the tasks faster than on a graphical interface                                    |
 | `*`      | expert user                                     | create complex searching queries                                                | find customers that match specific sets of criterias                                      |
-| `* *`    | expert user                                     | sort the customers based on the distance from my warehouse                      | better plan the delivery trip                                                             |
 | `*`      | long-time user                                  | create shortcuts and aliases for frequent tasks                                 | minimize repetition and speed up my workflow                                              |
 | `* *`    | expert user                                     | hide unused data                                                                | not be distracted by irrelevant information                                               |
 | `* *`    | business owner identifying loyal customers      | filter customer lists by number of purchases                                    | quickly find repeat buyers to send thank you messages                                     |
-| `* *`    | user tracking customer loyalty                  | sort customers by total purchase amount or frequency                            | identify top repeat buyers for special thank you gestures                                 |
-| `* *`    | user managing customer data                     | easily filter the customers' profile by their "repeat customer" tag             | easily sort and locate them for personalised outreach                                     |
-| `*`      | business owner preparing outreach campaigns     | export filtered lists of repeat customers directly from the app                 | easily integrate them into email or messaging tools for sending personalized thanks       |
 
-*{More to be added}*
 
 ### Use cases
 
@@ -330,7 +321,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case resumes at step 1.
 
-* 2a. A customer with the same name and contact already exists.
+* 2a. A customer with the same name already exists.
 
     * 2a1. ClientEase warns the user about the duplicate customer.
 
@@ -340,7 +331,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1.  User enters a command to search for a customer using name, tag, or other keywords.
+1.  User enters a command to search for a customer using name or other keywords.
 2.  ClientEase filters the customer list to those matching the search criteria.
 3.  ClientEase displays the matching customer profiles.
 
@@ -412,19 +403,17 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case resumes at step 4.
 
-*{More to be added}*
 
 ### Non-Functional Requirements
 
 1.  Should work on any _mainstream OS_ as long as it has Java `17` or above installed.
-2.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
+2.  Should be able to hold up to 1000 customers without a noticeable sluggishness in performance for typical usage.
 3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
 4. The system should respond to user commands within 2 seconds under normal usage conditions.
 5. The application should store customer data locally in a file so that the user can retain their data between application sessions.
 6. The user interface should remain usable on screens with a resolution of at least 1280×720.
-7. The system should prevent invalid customer data (e.g., invalid phone numbers or email formats) from being stored.
-8. The system should not require an Internet connection for normal operation.
-9. The system should ensure that customer data is automatically saved after each successful command to prevent data loss in case the application closes unexpectedly.
+7. The system should not require an Internet connection for normal operation.
+8. The system should ensure that customer data is automatically saved after each successful command to prevent data loss in case the application closes unexpectedly.
 
 ### Glossary
 
@@ -461,7 +450,6 @@ testers are expected to do more *exploratory* testing.
    1. Re-launch the app by double-clicking the jar file.<br>
        Expected: The most recent window size and location is retained.
 
-1. _{ more test cases …​ }_
 
 ### Deleting a customer
 
@@ -478,7 +466,6 @@ testers are expected to do more *exploratory* testing.
     4. Other incorrect delete commands to try: delete, delete x, ... (where x is larger than the list size)  
        Expected: Similar to previous.
 
-2. { more test cases … }
 
 ### Saving data
 
@@ -486,4 +473,3 @@ testers are expected to do more *exploratory* testing.
 
    1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
 
-1. _{ more test cases …​ }_
