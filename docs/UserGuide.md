@@ -447,6 +447,9 @@ delete John Doe
 ```
 Effect: Deletes the customer named `John Doe` (case-insensitive, extra spaces ignored).
 
+**Notes:**
+- The delete command operates on the currently displayed list.
+- If the target customer is not visible (e.g. due to filtering), the command will not find and delete the customer.
 
 ---
 
