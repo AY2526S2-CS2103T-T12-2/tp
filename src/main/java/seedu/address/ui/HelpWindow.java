@@ -71,8 +71,9 @@ public class HelpWindow extends UiPart<Stage> {
                     + "    Exit the application\n\n"
 
                     + "*[fields...] = name/NAME products/PRODUCTS location/LOCATION deadline/DATE contact/CONTACT "
-                    + "(choose at least one field)\n\n"
-
+                    + "* Required: name/NAME\n"
+                    + "* Optional: products/PRODUCTS location/LOCATION deadline/DATE contact/CONTACT\n\n"
+                    
                     + "*[fields for find...] = name/NAME product/PRODUCT location/LOCATION contact/CONTACT "
                     + "(each can repeat multiple times)\n\n"
 
