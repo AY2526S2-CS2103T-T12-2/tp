@@ -104,14 +104,11 @@ public class AddressBookParserTest {
     public void parseCommand_productAdd() throws Exception {
         assertTrue(parser.parseCommand("product add product/Muffin") instanceof ProductAddCommand);
         assertTrue(parser.parseCommand("product add p/Muffin") instanceof ProductAddCommand);
-        assertTrue(parser.parseCommand("PRODUCT ADD P/Muffin") instanceof ProductAddCommand);
-        assertTrue(parser.parseCommand("PrOdUcT AdD Product/Muffin") instanceof ProductAddCommand);
     }
 
     @Test
     public void parseCommand_productList() throws Exception {
         assertTrue(parser.parseCommand("product list") instanceof ProductListCommand);
-        assertTrue(parser.parseCommand("PRODUCT LIST") instanceof ProductListCommand);
         assertTrue(parser.parseCommand("product list extra") instanceof ProductListCommand);
     }
 

@@ -34,7 +34,7 @@ public class ProductCommandParser implements Parser<Command> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ProductCommand.MESSAGE_USAGE));
         }
 
-        String subcommand = matcher.group("subcommand").toLowerCase(Locale.ROOT);
+        String subcommand = matcher.group("subcommand");
         String arguments = matcher.group("arguments");
 
         return switch (subcommand) {

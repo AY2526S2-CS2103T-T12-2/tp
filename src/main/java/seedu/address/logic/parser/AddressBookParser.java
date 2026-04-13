@@ -52,10 +52,6 @@ public class AddressBookParser {
         // Lower level log messages are used sparingly to minimize noise in the code.
         logger.fine("Command word: " + commandWord + "; Arguments: " + arguments);
 
-        if (commandWord.equalsIgnoreCase(ProductCommand.COMMAND_WORD)) {
-            return new ProductCommandParser().parse(arguments);
-        }
-
         switch (commandWord) {
 
         case AddCommand.COMMAND_WORD:
@@ -87,6 +83,9 @@ public class AddressBookParser {
 
         case HelpCommand.COMMAND_WORD:
             return new HelpCommand();
+
+        case ProductCommand.COMMAND_WORD:
+            return new ProductCommandParser().parse(arguments);
 
         default:
             logger.finer("This user input caused a ParseException: " + userInput);
