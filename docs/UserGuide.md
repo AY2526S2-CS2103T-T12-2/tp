@@ -132,7 +132,11 @@ Expected output: All sample customers are shown in the Customer List Panel.
 
 **Step 2 - Add your first real customer:**
 ```
-add name/Jane Tan contact/91234567;jane@mybusiness.com products/Chocolate Cake:2, Muffin:5 location/Tampines deadline/2025-12-31
+add name/Jane Tan
+    contact/91234567;jane@mybusiness.com
+    products/Chocolate Cake:2, Muffin:5
+    location/Tampines
+    deadline/2025-12-31
 ```
 Enter the full command as a single line in the application. The text may wrap visually in this guide, but do not press Enter until the full command has been typed.
 Expected output: `Added Customer: Jane Tan`
@@ -237,7 +241,11 @@ Adds a new customer record to ClientEase.
 
 **Format:**
 ```
-add name/NAME [products/PRODUCTS] [location/LOCATION] [deadline/DEADLINE] [contact/CONTACT]
+add name/NAME
+    [products/PRODUCTS]
+    [location/LOCATION]
+    [deadline/DEADLINE]
+    [contact/CONTACT]
 ```
 
 **Parameter details:**
@@ -276,8 +284,13 @@ add name/NAME [products/PRODUCTS] [location/LOCATION] [deadline/DEADLINE] [conta
 
 **Example 1: Add a customer with full details**
 ```
-add name/John Doe contact/98765432;johnd@example.com products/Chocolate Cake:2, Muffin:5 location/Clementi Ave 2 deadline/2025-12-31
+add name/John Doe
+    contact/98765432;johnd@example.com
+    products/Chocolate Cake:2, Muffin:5
+    location/Clementi Ave 2
+    deadline/2025-12-31
 ```
+
 Enter the full command as a single line in the application.
 Effect: Adds a customer named John Doe with products, location, deadline (31 Dec 2025 at 23:59), and contact details.
 
@@ -331,7 +344,12 @@ Edits an existing customer in ClientEase.
 
 **Format:**
 ```
-edit INDEX [name/NAME] [products/PRODUCTS] [location/LOCATION] [deadline/DATE] [contact/CONTACT]
+edit INDEX
+    [name/NAME]
+    [products/PRODUCTS]
+    [location/LOCATION]
+    [deadline/DATE]
+    [contact/CONTACT]
 ```
 
 Short prefixes are supported: `n/` for `name/`, `p/` for `products/`, `l/` for `location/`, `d/` for `deadline/`, and `c/` for `contact/`.
@@ -354,7 +372,9 @@ Effect: Updates the contact of the 1st customer to `91234567`.
 
 **Example 2: Edit multiple fields**
 ```
-edit 2 name/Betsy Crower products/Muffin location/Newgate Prison
+edit 2 name/Betsy Crower
+    products/Muffin
+    location/Newgate Prison
 ```
 Effect: Updates the name, products, and location of the 2nd customer.
 
@@ -379,7 +399,10 @@ Finds customers whose details match the given keywords.
 
 **Format:**
 ```
-find [name/NAME]...[contact/CONTACT]...[location/LOCATION]...[product/PRODUCT]...
+find [name/NAME]...
+    [contact/CONTACT]...
+    [location/LOCATION]...
+    [product/PRODUCT]...
 ```
 
 Short prefixes are supported: `n/` for `name/`, `c/` for `contact/`, `l/` for `location/`, and `p/` for `product/`.
@@ -466,7 +489,7 @@ Clears all entries from ClientEase.
 
 ### Exiting the App : `exit`
 
-Exits the programme after displaying a farewell message with the current customer count.
+Exits the program after displaying a farewell message with the current customer count.
 
 **Format:** `exit`
 
@@ -477,7 +500,7 @@ Exits the programme after displaying a farewell message with the current custome
 
 ## Saving the Data
 
-ClientEase **automatically saves** your data to disc after every command that changes data. There is no Save button and
+ClientEase **automatically saves** your data to disk after every command that changes data. There is no Save button and
 no need to save manually.
 
 Your data is stored at:
