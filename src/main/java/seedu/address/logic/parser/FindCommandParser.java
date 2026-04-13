@@ -59,16 +59,16 @@ public class FindCommandParser implements Parser<FindCommand> {
         }
 
         List<String> nameKeywords = getAndCheckKeywords(argMultimap, PREFIX_NAME,
-                PREFIX_NAME_SHORT, "Name", Name.MAX_LENGTH);
+                PREFIX_NAME_SHORT, "Name", Name.MAX_LENGTH, true);
 
         List<String> contactKeywords = getAndCheckKeywords(argMultimap, PREFIX_CONTACT,
-                PREFIX_CONTACT_SHORT, "Contact", Contact.MAX_EMAIL_LENGTH);
+                PREFIX_CONTACT_SHORT, "Contact", Contact.MAX_EMAIL_LENGTH, false);
 
         List<String> locationKeywords = getAndCheckKeywords(argMultimap, PREFIX_LOCATION,
-                PREFIX_LOCATION_SHORT, "Location", Location.MAX_LENGTH);
+                PREFIX_LOCATION_SHORT, "Location", Location.MAX_LENGTH, false);
 
         List<String> productsKeywords = getAndCheckKeywords(argMultimap, PREFIX_PRODUCT,
-                PREFIX_PRODUCT_SHORT, "Product", Product.MAX_LENGTH);
+                PREFIX_PRODUCT_SHORT, "Product", Product.MAX_LENGTH, true);
 
         Predicate<Person> fullPred;
 
@@ -90,19 +90,30 @@ public class FindCommandParser implements Parser<FindCommand> {
     }
 
     private List<String> getAndCheckKeywords(ArgumentMultimap argMultimap, Prefix prefix, Prefix prefixShort,
-                                             String className, int maxLength) throws ParseException {
+                                             String className, int maxLength, boolean checkSingleWord)
+            throws ParseException {
 
         List<String> keywords = Stream.concat(
                         argMultimap.getAllValues(prefix).stream(),
                         argMultimap.getAllValues(prefixShort).stream())
                 .map(kw -> kw.trim()).filter(kw -> !kw.isEmpty()).toList();
 
-        if (keywords.stream().anyMatch(kw -> kw.length() > maxLength)) {
-            throw new ParseException(
+        for (String keyword : keywords) {
+            if (keyword.length() > maxLength) {
+                throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                            String.format("%s keyword length must not exceed %d characters.",
-                                    className, maxLength))
-            );
+                        String.format("%s keyword length must not exceed %d characters.",
+                            className, maxLength))
+                );
+            }
+            if (keyword.contains(" ")) {
+                throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                        String.format("%s keyword must be a single word."
+                            + " To specify multiple words, use multiple fields.",
+                            className, maxLength))
+                );
+            }
         }
 
         return keywords;
