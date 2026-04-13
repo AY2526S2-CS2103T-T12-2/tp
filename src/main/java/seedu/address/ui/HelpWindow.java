@@ -73,7 +73,7 @@ public class HelpWindow extends UiPart<Stage> {
                     + "*[fields...] = name/NAME products/PRODUCTS location/LOCATION deadline/DATE contact/CONTACT "
                     + "* Required: name/NAME\n"
                     + "* Optional: products/PRODUCTS location/LOCATION deadline/DATE contact/CONTACT\n\n"
-                    
+
                     + "*[fields for find...] = name/NAME product/PRODUCT location/LOCATION contact/CONTACT "
                     + "(each can repeat multiple times)\n\n"
 
