@@ -6,7 +6,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PRODUCTS;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.List;
 import java.util.Locale;
@@ -90,7 +89,6 @@ public class EditCommand extends Command {
         }
 
         model.setPerson(personToEdit, editedPerson); // updates customer record
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS); // refreshes list view
         String feedback = String.format(MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson));
         if (editPersonDescriptor.getDeadline().isPresent() && editedPerson.getDeadline().isPast()) {
             feedback += "\n" + Messages.MESSAGE_PAST_DEADLINE;
