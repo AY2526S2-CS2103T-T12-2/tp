@@ -360,14 +360,14 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case ends.
 
-**Use case: Delete a person**
+**Use case: Delete a customer**
 
 **MSS**
 
-1.  User requests to list persons
-2.  ClientEase shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  ClientEase deletes the person
+1.  User requests to list customers
+2.  ClientEase shows a list of customers
+3.  User requests to delete a specific customer in the list
+4.  ClientEase deletes the customer
 
     Use case ends.
 
@@ -463,22 +463,22 @@ testers are expected to do more *exploratory* testing.
 
 1. _{ more test cases …​ }_
 
-### Deleting a person
+### Deleting a customer
 
-1. Deleting a person while all persons are being shown
+1. Deleting a customer while all customers are being shown
 
-   1. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
+    1. Prerequisites: List all customers using the `list` command. Multiple customers in the list.
 
-   1. Test case: `delete 1`<br>
-      Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
+    2. Test case: delete 1  
+       Expected: First customer is deleted from the list. Details of the deleted customer shown in the status message. Timestamp in the status bar is updated.
 
-   1. Test case: `delete 0`<br>
-      Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
+    3. Test case: delete 0  
+       Expected: No customer is deleted. Error details shown in the status message. Status bar remains the same.
 
-   1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
-      Expected: Similar to previous.
+    4. Other incorrect delete commands to try: delete, delete x, ... (where x is larger than the list size)  
+       Expected: Similar to previous.
 
-1. _{ more test cases …​ }_
+2. { more test cases … }
 
 ### Saving data
 
