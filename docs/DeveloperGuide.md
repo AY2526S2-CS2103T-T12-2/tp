@@ -658,13 +658,13 @@ testers are expected to do more *exploratory* testing.
 
     2. Navigate to `[JAR file location]/data/`, where `[JAR file location]` is the location of the `ClientEase.jar` file.
 
-    3. Delete the `addressbook.json` file.
+    3. Delete the `ClientEase.json` file.
 
     4. Re-launch the app.<br>
        Expected: The app starts with the default sample customer data.
 
     5. Run the `exit` command to exit the app.<br>
-       Expected: A new `addressbook.json` file is created in the `data/` directory.
+       Expected: A new `ClientEase.json` file is created in the `data/` directory.
 
 2. Dealing with corrupted data files
 
@@ -672,13 +672,13 @@ testers are expected to do more *exploratory* testing.
 
     2. Navigate to `[JAR file location]/data/`, where `[JAR file location]` is the location of the `ClientEase.jar` file.
 
-    3. Corrupt the `addressbook.json` file by introducing an invalid edit.
+    3. Corrupt the `ClientEase.json` file by introducing an invalid edit.
 
     4. Re-launch the app.<br>
        Expected: The app detects the invalid data file, and starts with an empty customer list.
 
     5. Execute any command that modifies data, for example, adding a new customer.<br>
-       Expected: The `addressbook.json` file is overwritten with the new valid data.
+       Expected: The `ClientEase.json` file is overwritten with the new valid data.
 
 <div markdown="span" class="alert alert-info">:information_source: **Note:** To simplify the process of testing commands such as `clear`, testers can back up the data files in the `data/` directory.
 
