@@ -128,8 +128,9 @@ public class HelpWindow extends UiPart<Stage> {
         logger.fine("Showing help page about the application.");
         Stage helpStage = getRoot();
         double screenWidth = javafx.stage.Screen.getPrimary().getVisualBounds().getWidth();
-        helpStage.setX(screenWidth - 450);
-        helpStage.setY(100);
+        double screenHeight = javafx.stage.Screen.getPrimary().getVisualBounds().getHeight();
+        helpStage.setX(screenWidth - 700);
+        helpStage.setY(0);
         helpStage.show();
         helpStage.requestFocus();
     }

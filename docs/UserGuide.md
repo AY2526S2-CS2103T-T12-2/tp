@@ -372,11 +372,18 @@ Opens a help window that provides a quick overview of available commands and a l
 
 **Format:** `help`
 
-> ℹ️ **Notes:**
-> - The help window does **not block** the main application — you can continue using ClientEase while it is open.
-> - If the help window is already open, running `help` again will focus on the existing window.
+### Behaviour
 
-> 💡 **Tip:** Use the help window as a quick reference when you forget command formats, instead of searching through the full guide.
+- The help window opens in the top-right corner of the screen, allowing you to continue viewing and using the main application.
+- The help window is non-modal, so it does not block interaction with the main application.
+- If the help window is already open, running help again will bring the window to the front.
+
+### Notes
+
+- The help window provides a quick reference for commonly used commands.
+- You can copy the User Guide link using the "Copy URL" button in the help window.
+
+> **Tip:** Use the help window as a quick reference when you forget command formats, instead of searching through the full guide.
 
 [↑ Back to Table of Contents](#table-of-contents)
 
