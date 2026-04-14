@@ -16,6 +16,12 @@ public class FindCommandParserTest {
         assertParseFailure(parser, "     ", String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
     }
 
+    @Test
+    public void parse_noSearchTerms_throwsParseException() {
+        assertParseFailure(parser, " n/", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                "At least one non-empty search term should be provided."));
+    }
+
     // Commented out due to how we now have a complicated Predicate.
     /*
     @Test
