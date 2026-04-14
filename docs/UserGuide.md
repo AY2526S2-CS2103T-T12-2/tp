@@ -571,12 +571,13 @@ Short prefixes are supported: `n/` for `name/`, `c/` for `contact/`, `l/` for `l
 
 - `find name/John` returns `john` and `John Doe`
 - `find name/alex name/david` returns `Alex Yeoh`, `David Li`
+- `find name/alex name/david product/cake` returns `David Li`, where `Alex Yeoh` has `Muffin` and `David Li` has `Chocolate Cake`
 
 ![Before find command](images/find1.png)
 
-![After find command](images/find2.png)
+![During find command](images/find2.png)
 
-- `find name/alex name/david product/cake` returns `David Li`, where `Alex Yeoh` has `Muffin` and `David Li` has `Chocolate Cake`
+![After find command](images/find3.png)
 
 [↑ Back to Table of Contents](#table-of-contents)
 
