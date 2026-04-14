@@ -140,14 +140,8 @@ The `Model` component,
 * allows filtering of customers based on user commands such as `find`.
 * provides methods to modify data, such as adding, deleting, and editing customers and products.
 * ensures data consistency by preventing invalid operations (e.g. deleting a non-existent customer).
-* stores a `UserPref` object that represents user preferences, exposed as a `ReadOnlyUserPref`.
+* stores a `UserPrefs` object that represents user preferences, exposed as a `ReadOnlyUserPrefs`.
 * does not depend on the `UI`, `Logic`, or `Storage` components, as it represents the core data and domain logic of the application.
-
-<div markdown="span" class="alert alert-info">:information_source: **Note:** An alternative (arguably, a more OOP) model is given below. It has a `Tag` list in the `AddressBook`, which `Person` references. This allows `AddressBook` to only require one `Tag` object per unique tag, instead of each `Person` needing their own `Tag` objects.<br>
-
-<img src="images/BetterModelClassDiagram.png" width="450" />
-
-</div>
 
 
 ### Storage component
@@ -621,34 +615,34 @@ testers are expected to do more *exploratory* testing.
 1. Adding a product to the catalogue
 
     1. Test case: `product add product/Apple Pie`<br>
-      Expected: `Apple Pie` is added to the product catalogue. Status message confirms the addition.
+       Expected: `Apple Pie` is added to the product catalogue. Status message confirms the addition.
 
     2. Test case: `product add product/Apple Pie` (duplicate)<br>
-      Expected: No product is added. Error message indicating that the product already exists in the catalogue.
+       Expected: No product is added. Error message indicating that the product already exists in the catalogue.
 
     3. Test case: `product add product/` (blank name)<br>
-      Expected: No product is added. Error message is shown in the status message.
+       Expected: No product is added. Error message is shown in the status message.
 
     4. Test case: `product add product/Cake,Special` (name containing `,`)<br>
-      Expected: No product is added. Error message indicating that `,` and `:` are not allowed in product names.
+       Expected: No product is added. Error message indicating that `,` and `:` are not allowed in product names.
 
 2. Listing products in the catalogue
 
     1. Test case: `product list`<br>
-    Expected: All products in the catalogue are displayed in alphabetical order in the status message. If the catalogue is empty, a message indicating no products are available is shown.
+       Expected: All products in the catalogue are displayed in alphabetical order in the status message. If the catalogue is empty, a message indicating no products are available is shown.
 
 3. Deleting a product from the catalogue
 
     1. Prerequisites: The product catalogue contains `Muffin`, and no customer currently has `Muffin` in their product list.
 
     2. Test case: `product delete product/Muffin`<br>
-    Expected: `Muffin` is removed from the product catalogue. Status message confirms the deletion.
+       Expected: `Muffin` is removed from the product catalogue. Status message confirms the deletion.
 
     3. Test case: `product delete product/Muffin` when a customer is currently using `Muffin`<br>
-    Expected: No product is deleted. Error message indicating that the product is in use and cannot be removed.
+       Expected: No product is deleted. Error message indicating that the product is in use and cannot be removed.
 
     4. Test case: `product delete product/NonExistent`<br>
-    Expected: No product is deleted. Error message indicating that the product does not exist in the catalogue.
+       Expected: No product is deleted. Error message indicating that the product does not exist in the catalogue.
 
 ### Saving data
 
