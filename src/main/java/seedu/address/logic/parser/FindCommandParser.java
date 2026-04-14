@@ -106,7 +106,7 @@ public class FindCommandParser implements Parser<FindCommand> {
                             className, maxLength))
                 );
             }
-            if (keyword.contains(" ")) {
+            if (checkSingleWord && keyword.contains(" ")) {
                 throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                         String.format("%s keyword must be a single word."
