@@ -173,7 +173,7 @@ ClientEase manages products through the top-level `product` command, which is sp
 
 #### Overall command flow
 
-When the user enters a command such as `product add product/Muffin`:
+When the user enters a command such as `product add p/Muffin`:
 
 1. `AddressBookParser` recognises `product` as the command word.
 2. The remaining input is passed to `ProductCommandParser`.
