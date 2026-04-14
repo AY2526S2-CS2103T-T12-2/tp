@@ -70,6 +70,16 @@ public class FindCommandParser implements Parser<FindCommand> {
         List<String> productsKeywords = getAndCheckKeywords(argMultimap, PREFIX_PRODUCT,
                 PREFIX_PRODUCT_SHORT, "Product", Product.MAX_LENGTH, true);
 
+        if (nameKeywords.isEmpty()
+                && contactKeywords.isEmpty()
+                && locationKeywords.isEmpty()
+                && productsKeywords.isEmpty()) {
+            throw new ParseException(
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    "At least one non-empty search term should be provided.")
+            );
+        }
+
         Predicate<Person> fullPred;
 
         if (nameKeywords.isEmpty() && contactKeywords.isEmpty() && locationKeywords.isEmpty()) {
