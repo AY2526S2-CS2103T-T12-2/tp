@@ -70,8 +70,29 @@ dependencies {
     testRuntimeOnly group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: jUnitVersion
 }
 
+tasks.matching { it.name in ['jar',
+                             'distZip',
+                             'distTar',
+                             'installDist',
+                             'startScripts',
+                             'shadowDistZip',
+                             'shadowDistTar',
+                             'installShadowDist',
+                             'startShadowScripts'] }
+        .configureEach { enabled = false }
+
 shadowJar {
     archiveFileName = 'ClientEase.jar'
 }
 
 defaultTasks 'clean', 'test'
+
+import org.apache.tools.ant.filters.FixCrLfFilter
+
+// Normalize EOL of selected text resources in the build output (so the JAR contents are consistent)
+// This does NOT change files in the working tree.
+tasks.named('processResources') {
+    filesMatching(['**/*.fxml', '**/*.css']) {
+        filter(FixCrLfFilter, eol: FixCrLfFilter.CrLf.newInstance('lf'))
+    }
+}

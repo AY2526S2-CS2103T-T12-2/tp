@@ -165,6 +165,7 @@ The screenshot above shows the main ClientEase window. The table below describes
 | **Command Box** (top) | Where you type your commands. |
 | **Result Display** (below command box) | Shows success messages or error feedback after each command. |
 | **Customer List Panel** | Displays all customers. Cards are colour-coded by **Priority Level** (Green/Yellow/Red) based on total product quantity when products are provided. |
+| **ALL/FILTERED Status Indicator** | A badge that indicates whether the list of customers is filtered or not. |
 | **Priority Badge** | A small tag (LOW, MEDIUM, HIGH) shown next to the name when the customer has products. |
 | **Status Bar** (bottom) | Shows the data file save location. |
 

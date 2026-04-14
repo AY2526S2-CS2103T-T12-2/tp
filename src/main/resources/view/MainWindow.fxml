@@ -3,6 +3,7 @@
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Scene?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
@@ -14,7 +15,7 @@
 <fx:root type="javafx.stage.Stage" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
          title="ClientEase" minWidth="450" minHeight="600" onCloseRequest="#handleExit">
   <icons>
-    <Image url="@/images/address_book_32.png" />
+    <Image url="@/images/clientease_32.png" />
   </icons>
   <scene>
     <Scene>
@@ -50,6 +51,10 @@
           <padding>
             <Insets top="10" right="10" bottom="10" left="10" />
           </padding>
+
+          <Label fx:id="statusLabel" text="ALL"
+                 style="-fx-font-size: 9pt; -fx-font-weight: bold; -fx-text-fill: green; -fx-padding: 0 0 5 0"/>
+
           <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
         </VBox>
 
