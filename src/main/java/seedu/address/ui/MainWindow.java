@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
@@ -46,6 +47,9 @@ public class MainWindow extends UiPart<Stage> {
 
     @FXML
     private StackPane personListPanelPlaceholder;
+
+    @FXML
+    private Label statusLabel;
 
     @FXML
     private StackPane resultDisplayPlaceholder;
@@ -130,6 +134,16 @@ public class MainWindow extends UiPart<Stage> {
 
         CommandBox commandBox = new CommandBox(this::executeCommand);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+
+        logic.isFiltered().addListener((observable, oldValue, newValue) -> {
+            if (newValue) {
+                statusLabel.setText("FILTERED");
+                statusLabel.setStyle("-fx-text-fill: orange; -fx-font-weight: bold; -fx-font-size: 9pt;");
+            } else {
+                statusLabel.setText("ALL");
+                statusLabel.setStyle("-fx-text-fill: green; -fx-font-weight: bold; -fx-font-size: 9pt;");
+            }
+        });
     }
 
     /**
