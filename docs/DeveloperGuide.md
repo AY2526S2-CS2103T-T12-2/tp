@@ -357,7 +357,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 1.  User requests to list customers
 2.  ClientEase shows a list of customers
-3.  User requests to delete a specific customer in the list
+3.  User requests to delete a specific customer in the list by index or name
 4.  ClientEase deletes the customer
 
     Use case ends.
@@ -365,10 +365,17 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **Extensions**
 
 * 2a. The list is empty.
+    * 2a1. ClientEase shows an error message
 
-  Use case ends.
+      Use case ends.
 
 * 3a. The given index is invalid.
+
+    * 3a1. ClientEase shows an error message.
+
+      Use case resumes at step 2.
+
+* 3b. No customer with the given name is found
 
     * 3a1. ClientEase shows an error message.
 
@@ -453,7 +460,7 @@ testers are expected to do more *exploratory* testing.
 
 ### Deleting a customer
 
-1. Deleting a customer while all customers are being shown
+1. Deleting a customer by index (full list)
 
    1. Prerequisites: List all customers using the `list` command. Multiple customers in the list.
 
@@ -463,8 +470,29 @@ testers are expected to do more *exploratory* testing.
    3. Test case: delete 0  
       Expected: No customer is deleted. Error details shown in the status message. Status bar remains the same.
 
-   4. Other incorrect delete commands to try: delete, delete x, ... (where x is larger than the list size)  
+   4. Other incorrect delete commands to try: delete, delete x, delete 999 (where x is not a number or index is out of range)  
       Expected: Similar to previous.
+
+2. Deleting a customer by name
+
+    1. Prerequisites: List all customers using the `list` command. At least one customer exists.
+
+    2. Test case: delete John Doe  
+       Expected: The customer with name John Doe is deleted. Details of the deleted customer shown in the status message. Timestamp in the status bar is updated.
+
+    3. Test case: delete NONEXISTENTNAME
+       Expected: No customer is deleted. Error details shown in the status message. Status bar remains the same.
+
+3. Deleting after filtering
+
+    1. Prerequisites: Use `find name/John` to filter customers.
+
+    2. Test case: delete John Doe  
+       Expected: The customer with name John Doe is deleted. Details of the deleted customer shown in the status message. Timestamp in the status bar is updated.
+
+    3. Test case: delete 1
+       Expected: First customer is deleted from the list. Details of the deleted customer shown in the status message. Timestamp in the status bar is updated.
+
 
 
 ### Saving data
