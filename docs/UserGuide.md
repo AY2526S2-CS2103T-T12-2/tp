@@ -5,7 +5,7 @@ title: User Guide
 
 # ClientEase User Guide
 
-**ClientEase is a lightweight customer contact manager designed for tech-savvy home-based online business owners** who manage a small to medium customer base,
+**ClientEase is a lightweight customer contact manager designed for home-based online business owners** who manage a small to medium customer base,
 perform frequent daily updates to customer contact information, and prefer fast, command-line-style text input over
 GUI-driven interactions.
 
@@ -66,8 +66,7 @@ This guide assumes you are comfortable with:
 
 | Assumed Skill | What It Means in Practice |
 |---|---|
-| Basic terminal use | Opening a terminal, using `cd` to navigate folders, running `java -jar` commands |
-| Simple command syntax | Typing structured commands like `add name/John Doe contact/98765432` |
+| Terminal Literacy | Knowing how to open a terminal window and run the provided commands |
 | Reading on-screen feedback | Interpreting short success or error messages shown in the app |
 | Basic data awareness | Understanding that your data is stored in a local file, and knowing to back it up |
 
