@@ -581,7 +581,7 @@ Effect: Clears the customer's product list completely.
 
 ---
 
-### Locating Customers : `find`
+### Finding Customers : `find`
 
 Finds customers whose details match the given keywords.
 
